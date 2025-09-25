@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tech Catalog</title>
+  
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts - Cyberpunk/Tech style fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <style id="app-style">
+    :root {
+      --neon-pink: #ff00ff;
+      --neon-blue: #00ffff;
+      --neon-green: #39ff14;
+      --dark-bg: #121212;
+      --darker-bg: #0a0a0a;
+      --card-bg: #1e1e1e;
+    }
+    
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: var(--dark-bg);
+      color: white;
+      min-height: 100vh;
+    }
+    
+    .neon-text-pink {
+      color: var(--neon-pink);
+      text-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
+    }
+    
+    .neon-text-blue {
+      color: var(--neon-blue);
+      text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+    }
+    
+    .neon-text-green {
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
+    }
+    
+    .neon-border-pink {
+      border: 2px solid var(--neon-pink);
+      box-shadow: 0 0 5px var(--neon-pink), 0 0 10px var(--neon-pink);
+    }
+    
+    .neon-border-blue {
+      border: 2px solid var(--neon-blue);
+      box-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+    }
+    
+    .neon-border-green {
+      border: 2px solid var(--neon-green);
+      box-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
+    }
+    
+    .header {
+      background-color: var(--darker-bg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .category-pill {
+      background-color: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .category-pill.active {
+      background-color: var(--neon-blue);
+      color: black;
+      box-shadow: 0 0 10px var(--neon-blue);
+    }
+    
+    .product-card {
+      background-color: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .whatsapp-btn {
+      background-color: transparent;
+      color: var(--neon-green);
+      border: 2px solid var(--neon-green);
+      transition: all 0.3s ease;
+    }
+    
+    .whatsapp-btn:hover {
+      background-color: var(--neon-green);
+      color: black;
+      box-shadow: 0 0 10px var(--neon-green);
+    }
+    
+    .logo-preview {
+      max-height: 60px;
+      max-width: 200px;
+    }
+    
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    
+    .spinner {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid var(--neon-blue);
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .file-upload-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .file-upload-btn input[type=file] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 100%;
+      min-height: 100%;
+      font-size: 100px;
+      text-align: right;
+      filter: alpha(opacity=0);
+      opacity: 0;
+      outline: none;
+      cursor: pointer;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading overlay -->
+  <div id="loading-overlay" class="loading hidden">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Header section - Changed to only have centered logo -->
+  <header class="header py-4 px-6">
+    <div class="container mx-auto flex justify-center items-center relative">
+      <div class="logo-container relative">
+        <img id="logo-preview" class="logo-preview" src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1748288099/logo_top_gaming_recortado_1_eb4b9c.png" alt="Logo">
+      </div>
+    </div>
+  </header>
+
+  <!-- Category filter section - Modified for scroll behavior -->
+  <div id="category-section" class="bg-gray-900 py-4 px-6 sticky top-0 z-10 transition-all duration-300">
+    <div class="container mx-auto">
+      <div class="flex flex-wrap items-center gap-3 mb-3">
+        <span class="text-gray-400">Categorías:</span>
+        <div id="category-container" class="flex flex-wrap gap-2">
+          <!-- Categories will be added here dynamically -->
+        </div>
+      </div>
+      <button id="reset-filters" class="text-sm text-gray-400 hover:text-white flex items-center">
+        <i class="fas fa-undo mr-1"></i> Restablecer Filtros
+      </button>
+    </div>
+  </div>
+
+  <!-- Product grid section -->
+  <main class="container mx-auto py-8 px-6">
+    <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Products will be added here dynamically -->
+    </div>
+    
+    <div id="no-products" class="hidden text-center py-12">
+      <i class="fas fa-search text-4xl mb-4 text-gray-600"></i>
+      <p class="text-xl text-gray-400">No hay productos que coincidan con tus filtros</p>
+      <button id="reset-filters-empty" class="mt-4 text-blue-400 hover:text-blue-300">
+        Restablecer Filtros
+      </button>
+    </div>
+  </main>
+
+  <script id="app-script">
+    // Sample product data
+    const sampleProducts = [
+      {
+        id: 1,
+        name: "Disco Rigido Externo Lexar SSD 512GB Sata 550MB/s USB 3.1 (LSL200X512G-RNNNU)",
+        price: 1299.99,
+        category: "Discos Externos",
+        image: "https://cdn.pixabay.com/photo/2020/10/21/18/07/laptop-5673901_960_720.jpg"
+      },
+      {
+        id: 2,
+        name: "HDD 2 Tb Sata WD20EARZ BLUE Western Digital",
+        price: 499.99,
+        category: "Discos HDD",
+        image: "https://res.cloudinary.com/dlgwd3dsq/image/upload/v1750270977/Dise%C3%B1o_sin_t%C3%ADtulo_20250618_152127_0000_mm2ewz.png"
+      },
+      {
+        id: 3,
+        name: "HDD 3 Tb Sata III Skyhawk Seagate ST3000VX009",
+        price: 129.99,
+        category: "Discos HDD",
+        image: "https://res.cloudinary.com/dlgwd3dsq/image/upload/v1750270369/Dise%C3%B1o_sin_t%C3%ADtulo_20250618_151203_0000_hvnnfs.png"
+      },
+      {
+        id: 4,
+        name: "HDD 2 Tb Sata III Skyhawk Seagate ST2000VX017",
+        price: 89.99,
+        category: "Discos HDD",
+        image: "https://res.cloudinary.com/dlgwd3dsq/image/upload/v1750270625/Dise%C3%B1o_sin_t%C3%ADtulo_20250618_151632_0000_jxfzp4.png"
+      },
+      {
+        id: 5,
+        name: "HDD 4 Tb Sata WD43PURZ PURPLE Western Digital (SC HA520)",
+        price: 149.99,
+        category: "Discos HDD",
+        image: "https://res.cloudinary.com/dlgwd3dsq/image/upload/v1750270961/Dise%C3%B1o_sin_t%C3%ADtulo_20250618_151936_0000_dfw9jm.png"
+      },
+      {
+        id: 6,
+        name: "HDD 2 Tb Sata WD23PURZ PURPLE Western Digital",
+        price: 399.99,
+        category: "Discos HDD",
+        image: "https://cdn.pixabay.com/photo/2017/02/10/14/10/virtual-2055227_960_720.png"
+      },
+      {
+        id: 7,
+        name: "HDD 6 Tb Sata WD64PURZ PURPLE Western Digital",
+        price: 999.99,
+        category: "Discos HDD",
+        image: "https://cdn.pixabay.com/photo/2016/11/29/12/30/phone-1869510_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "SSD M.2 500 Gb NV3 Kingston NVMe (SNV3S/500G)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "SSD M.2 4 Tb NV3 PCIe 4.0 Kingston NVMe (SNV3S/4000G)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 2048GB Kingston KC3000 NVMe (SKC3000S/2048G)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 SATA 512GB Hiksemi WAVE (HS-SSD-WAVE(N) 512G)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD Verbatim 1TB Vi560 S3",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 Kingston 512GB NVMe Gen4 (SKC3000S/512G)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 128GB Hiksemi WAVE (HS-SSD-WAVE(P) 128G)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 Lexar 512GB 3300MB/s 2280 PCIe Gen3x4 NVMe NM620",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "SSD M.2 500 Gb Western Digital Green NVMe SN350 (WDS500G2G0C-00CDH0)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 Lexar 256GB 3300MB/s 2280 PCIe Gen3x4 NVMe NM620",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 PCIe 3.0 512GB Hiksemi WAVE (HS-SSD-WAVE(P))",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 PCIe 3.0 256GB Hiksemi WAVE (HS-SSD-WAVE(P))",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "SSD M.2 500 Gb Western Digital Blue SATA (WDS500G3B0B-00AXS0)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "SSD M.2 1 Tb NV3 PCIe 4.0 Kingston NVMe (SNV3S/1000G)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "SSD M.2 500 GB Netac Nv3000RGB 2280 Nand E4x (NT01NV3000RGB-500-E4X)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "SSD M.2 512 GB Netac N930e Pro Pcie 3x42280 Nvme 3d (NT01N930E-512G-E4X)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 PCIe 3.0 256GB Hiksemi WAVE Pro (HS-SSD-WAVE Pro(P) 256G)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 6Gb/s 128GB Hiksemi WAVE (HS-SSD-WAVE(N) 128G)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Disco SSD M.2 PCIe 4.0 512GB Hiksemi FUTURE Lite (HS-SSD-FUTURE Lite 512G)",
+        price: 249.99,
+        category: "Discos M.2",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 9,
+        name: "SSD 240 Gb HIKSEMI WAVE Sata 3.0 6GB/s (HS-SSD-WAVE(S) 240G)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 10,
+        name: "Disco SSD 1.92TB Lexar 2.5 STA 6GB/s NQ100",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 11,
+        name: "SSD 480 Gb HIKSEMI WAVE Sata 3.0 6GB/s (HS-SSD-WAVE(S) 480G)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 12,
+        name: "SSD 480 Gb 2.5 Sata Rev 3.0 DC600M 6Gb/s Kingston (SEDC600M/480G)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 13,
+        name: "SSD 480 GB Netac Sa500 2.5 Sata3 (NT01SA500-480-S3X)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 14,
+        name: "SSD Hiksemi 1TB V300X Sata DVR/NVR c/Soporte (V300X 1TB-SSDV04DCD60A1000BAA)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 15,
+        name: "SSD Hiksemi 500GB V300X Sata DVR/NVR c/Soporte (V300X 500GB-SSDV04DCD60A500GBAA)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 16,
+        name: "SSD 240 Gb Sata III A400 Kingston (SA400S37/240G)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 17,
+        name: "SSD 480 Gb Sata III A400 Kingston (SA400S37/480G)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 18,
+        name: "SSD 512 Gb Sata HIKVISION E100 (HS-SSD-E100)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 19,
+        name: "SSD 480GB Lexar 2.5 STA 6GB/s NQ100",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 20,
+        name: "SSD 240GB Lexar 2.5 STA 6GB/s NQ100",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 21,
+        name: "Disco SSD Verbatim 512GB Vi550 S3",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 22,
+        name: "SSD 120 Gb HIKSEMI WAVE Sata 3.0 6GB/s (HS-SSD-WAVE(S) 120G)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 23,
+        name: "SSD 960 Gb HIKSEMI WAVE Sata 3.0 6GB/s (HS-SSD-WAVE(S) 960G)",
+        price: 249.99,
+        category: "Discos SSD",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD HikSemi Capture 4k 256GB Class10 (HS-TF-E3 256G)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD Lexar 32GB Class10 100MB/s 45MB/s (LMS0633032G-BNNNG)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD HikSemi Neo 128GB Class10 (HS-TF-C1 128G)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD HikSemi Neo 32GB Class10 (HS-TF-C1 32G)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD 64 Gb Clase 10 Kingston P/Videovigilancia (SDCE/64GB)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD 64 Gb Clase 10 Kingston 170 MB/s (SDCG3/64GB) Canvas Go Plus",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD HikSemi Neo Plus 128GB Class10 (HS-TF-E1 128G)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD HikSemi Neo Plus 64GB Class10 (HS-TF-E1 64G)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD HikSemi Neo Plus 512GB Class10 (HS-TF-E1 512G)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD HikSemi Neo 64GB Class10 (HS-TF-D1 64G)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD HikSemi Neo 256GB Class10 (HS-TF-D1 256G)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD HikSemi Capture 4k 64GB Class10 (HS-TF-E3 64G)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Memoria Micro SD HikSemi Capture 4k 128GB Class10 (HS-TF-E3 128G)",
+        price: 249.99,
+        category: "Tarjeta de Memoria",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Pendrive Adata 128GB 3.2 (AUV128-128G-RBE)",
+        price: 249.99,
+        category: "Pendrive",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Pendrive Netac 128 GB U182 Red 3.0 (NT03U182N-128G-30RE)",
+        price: 249.99,
+        category: "Pendrive",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Pendrive 64 Gb HikSemi 3.2 USB M210S PULLY (HS-USB-M210S 64G U3)",
+        price: 249.99,
+        category: "Pendrive",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Pendrive 32 Gb HikSemi 3.2 USB M210S PULLY (HS-USB-M210S 32G U3)",
+        price: 249.99,
+        category: "Pendrive",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Pendrive 128 Gb HikSemi 3.2 USB M210S PULLY (HS-USB-M210S 128G U3)",
+        price: 249.99,
+        category: "Pendrive",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Pendrive 64 Gb HikSemi 3.0 USB M200S ROTARY (HS-USB-M200S 64G U3)",
+        price: 249.99,
+        category: "Pendrive",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Pendrive 16 Gb Store n Go Verbatim (#96317 2110) rojo",
+        price: 249.99,
+        category: "Pendrive",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Pendrive 64 Gb HikSemi 3.0 Usb y Usb-C E307C Dual Slim (HS-USB-E307C 64G U3)",
+        price: 249.99,
+        category: "Pendrive",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "Pendrive 128 Gb HikSemi 3.0 Usb y Usb-C E307C Dual Slim (HS-USB-E307C 128G U3)",
+        price: 249.99,
+        category: "Pendrive",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "",
+        price: 249.99,
+        category: "Auriculares Bloutooth",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "",
+        price: 249.99,
+        category: "Auriculares Bloutooth",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "",
+        price: 249.99,
+        category: "Auriculares Bloutooth",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "",
+        price: 249.99,
+        category: "Auriculares Bloutooth",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "",
+        price: 249.99,
+        category: "Auriculares Bloutooth",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+      {
+        id: 8,
+        name: "",
+        price: 249.99,
+        category: "Auriculares Bloutooth",
+        image: "https://cdn.pixabay.com/photo/2015/06/25/17/22/smart-watch-821559_960_720.jpg"
+      },
+    ];
+
+    // DOM elements
+    const loadingOverlay = document.getElementById('loading-overlay');
+    const logoUpload = document.getElementById('logo-upload');
+    const logoPreview = document.getElementById('logo-preview');
+    const categoryContainer = document.getElementById('category-container');
+    const productsGrid = document.getElementById('products-grid');
+    const resetFiltersBtn = document.getElementById('reset-filters');
+    const resetFiltersEmptyBtn = document.getElementById('reset-filters-empty');
+    const noProductsEl = document.getElementById('no-products');
+    const categorySection = document.getElementById('category-section');
+
+    // Add scroll behavior
+    let lastScrollTop = 0;
+    
+    window.addEventListener('scroll', function() {
+      const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+      
+      if (currentScroll > lastScrollTop && currentScroll > 100) {
+        // Scrolling down
+        categorySection.style.transform = 'translateY(-100%)';
+      } else {
+        // Scrolling up
+        categorySection.style.transform = 'translateY(0)';
+      }
+      
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    }, false);
+
+    // State
+    let products = [];
+    let categories = [];
+    let selectedCategories = [];
+
+    // Load data from LocalStorage or use sample data
+    function loadData() {
+      showLoading();
+      
+      // Try to load from localStorage
+      const storedProducts = localStorage.getItem('techCatalogProducts');
+      products = storedProducts ? JSON.parse(storedProducts) : sampleProducts;
+      
+      // Extract unique categories
+      categories = [...new Set(products.map(product => product.category))];
+      
+      // Load logo
+      const storedLogo = localStorage.getItem('techCatalogLogo');
+      if (storedLogo) {
+        logoPreview.src = storedLogo;
+      }
+      
+      renderCategories();
+      renderProducts();
+      
+      hideLoading();
+    }
+
+    // Removing siteName-related function since it's no longer needed
+    // function saveSiteName() { ... }
+
+    // Render category filters - Updated to Spanish
+    function renderCategories() {
+      categoryContainer.innerHTML = '';
+      
+      categories.forEach(category => {
+        const isActive = selectedCategories.includes(category);
+        const categoryPill = document.createElement('button');
+        categoryPill.className = `category-pill rounded-full px-4 py-1 text-sm ${isActive ? 'active' : ''}`;
+        categoryPill.textContent = category;
+        categoryPill.dataset.category = category;
+        categoryPill.addEventListener('click', () => toggleCategory(category));
+        
+        categoryContainer.appendChild(categoryPill);
+      });
+    }
+
+    // Toggle category filter
+    function toggleCategory(category) {
+      if (selectedCategories.includes(category)) {
+        selectedCategories = selectedCategories.filter(cat => cat !== category);
+      } else {
+        selectedCategories.push(category);
+      }
+      
+      renderCategories();
+      renderProducts();
+    }
+
+    // Reset all filters
+    function resetFilters() {
+      selectedCategories = [];
+      renderCategories();
+      renderProducts();
+    }
+
+    // Render products based on selected filters - Updated to Spanish
+    function renderProducts() {
+      productsGrid.innerHTML = '';
+      
+      const filteredProducts = selectedCategories.length > 0
+        ? products.filter(product => selectedCategories.includes(product.category))
+        : products;
+      
+      if (filteredProducts.length === 0) {
+        noProductsEl.classList.remove('hidden');
+      } else {
+        noProductsEl.classList.add('hidden');
+        
+        filteredProducts.forEach(product => {
+          const productCard = document.createElement('div');
+          productCard.className = 'product-card rounded-lg overflow-hidden flex flex-col';
+          
+          productCard.innerHTML = `
+            <div class="h-48 overflow-hidden bg-gray-800">
+              <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">
+            </div>
+            <div class="p-4 flex-grow flex flex-col">
+              <h3 class="text-xl font-bold mb-2 neon-text-blue">${product.name}</h3>
+              <p class="text-2xl font-bold mb-4 neon-text-pink">$${product.price.toFixed(2)}</p>
+              <div class="mt-auto">
+                <button class="whatsapp-btn w-full py-2 px-4 rounded-md font-medium flex items-center justify-center gap-2" 
+                  data-product="${product.name}">
+                  <i class="fab fa-whatsapp"></i> Consultar en WhatsApp
+                </button>
+              </div>
+            </div>
+          `;
+          
+          const whatsappBtn = productCard.querySelector('.whatsapp-btn');
+          whatsappBtn.addEventListener('click', () => openWhatsApp(product.name));
+          
+          productsGrid.appendChild(productCard);
+        });
+      }
+    }
+
+    // Open WhatsApp with pre-filled message
+    function openWhatsApp(productName) {
+      const message = encodeURIComponent(`Hola, quisiera consultar stock de ${productName}`);
+      window.open(`https://wa.me/?text=${message}`, '_blank');
+    }
+
+    // Show loading overlay
+    function showLoading() {
+      loadingOverlay.classList.remove('hidden');
+    }
+
+    // Hide loading overlay
+    function hideLoading() {
+      loadingOverlay.classList.add('hidden');
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', loadData);
+    // Removing siteName event listeners
+    logoUpload.addEventListener('change', handleLogoUpload);
+    resetFiltersBtn.addEventListener('click', resetFilters);
+    resetFiltersEmptyBtn.addEventListener('click', resetFilters);
+  </script>
+</body>
+</html>
