@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Top Gaming</title>
+<style>
+  /* RESET */
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  /* FUENTES Y COLORES */
+  body {
+    font-family: 'Chakra Petch', sans-serif;
+    background-color: #0a0a0a;
+    color: #fff;
+  }
+  a { text-decoration:none; color: inherit; }
+  
+  /* HEADER */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 20px!important;
+    background: linear-gradient(90deg, #000, #0a0a0a);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .logo img { height:80px; 
+    margin-top: -10px;
+    margin-bottom: -10px;
+  }
+  section {
+  scroll-margin-top: 50px; /* Ajustá según la altura real de tu header */
+}
+
+#products-container {
+  scroll-margin-top: 150px;
+}
+
+  /* MENU */
+  nav {
+    display: flex;
+    align-items: center;
+  }
+  /* Contenedor del menú móvil */
+.menu {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 20px 15px;
+  border-radius: 10px;
+  margin-top: 10px;
+  animation: fadeSlide 0.25s ease forwards;
+}
+
+/* Animación */
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mostrar menú */
+.menu.active {
+  display: flex;
+}
+
+/* Opciones del menú */
+.menu a {
+  color: white;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  color: #00ffe1;
+}
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    outline: none;
+  }
+  .menu-toggle:focus,
+.menu-toggle:active {
+  outline: none;
+  box-shadow: none;
+}
+  .menu-toggle span {
+    height: 3px;
+    width: 25px;
+    background: #00ffff;
+    margin: 4px 0;
+    transition: 0.3s;
+    outline: none;
+  }
+  * {
+  -webkit-tap-highlight-color: transparent;
+}
+/* CONTENEDOR DEL ICONO */
+.menu-toggle {
+  width: 32px;
+  height: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+  z-index: 999;
+  outline: none;
+}
+
+/* LÍNEAS DE LA HAMBURGUESA */
+.menu-toggle span {
+  height: 4px;
+  width: 100%;
+  background: white; /* podés poner #00ffff si querés cyan */
+  border-radius: 4px;
+  transition: 0.25s ease-in-out;
+  position: relative;
+}
+
+/* EVITAR HIGHLIGHT AZUL */
+.menu-toggle:focus,
+.menu-toggle:active {
+  outline: none;
+  box-shadow: none;
+}
+
+/* COPIAS PARA GLITCH */
+.menu-toggle span::before,
+.menu-toggle span::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  background: white;
+  opacity: 0;
+  mix-blend-mode: difference;
+}
+
+/* DESALINEO GLITCH */
+.menu-toggle span::before { transform: translateX(-2px); }
+.menu-toggle span::after { transform: translateX(2px); }
+
+/* ACTIVAR GLITCH */
+.menu-toggle.active span::before,
+.menu-toggle.active span::after {
+  animation: glitch 0.2s steps(2) forwards;
+}
+
+@keyframes glitch {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; transform: translateX(-3px); }
+  100% { opacity: 0; }
+}
+
+/* TRANSFORMACIÓN A X */
+.menu-toggle.active span:nth-child(1) {
+  transform: translateY(11px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+  ul.menu {
+    display: flex;
+    gap: 25px;
+  }
+  ul.menu li { list-style: none; }
+  ul.menu li a {
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+  ul.menu li a:hover {
+    background-color: #00ffff22;
+  }
+
+  /* VIDEO PRESENTACION */
+  .presentation {
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+  }
+  .presentation video {
+    width: 100%;
+    height: auto;
+  }
+
+  /* CATEGORIAS */
+  .categories {
+    padding: 40px 30px;
+    text-align: center;
+  }
+  .categories h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #00ffff;
+  }
+ 
+
+/* GRID */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .category-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* CARD */
+.category-card {
+  position: relative;
+  height: 160px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #444444;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+/* IMAGEN */
+.category-card .category-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* OVERLAY GRADIENTE ORIGINAL */
+.category-card .category-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, black, transparent);
+  z-index: 10;
+  opacity: 0.9;
+}
+
+/* TEXTO */
+.category-card .category-text {
+  position: absolute;
+  bottom: 12px;
+  z-index: 20;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* EFECTO NEÓN EN HOVER (IGUAL AL ORIGINAL) */
+.category-card:hover {
+  border-color: #00ffe1;
+  box-shadow: 0 0 10px #00ffe1;
+}
+
+/* ========= VERSIÓN PC ========= */
+@media (min-width: 768px) {
+
+  /* OCULTAR hamburguesa */
+  .menu-toggle {
+    display: none !important;
+  }
+
+  /* Menú horizontal */
+  ul.menu {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+
+    gap: 25px;
+
+    position: static !important;
+    background: none !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  ul.menu li a {
+    font-size: 16px;
+    color: #ccc;
+  }
+
+  ul.menu li a:hover {
+    color: #00ffff;
+  }
+}
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .menu-toggle { display: flex; }
+    ul.menu {
+      position: absolute;
+      top: 65px;
+      right: 30px;
+      background: #111;
+      flex-direction: column;
+      width: 200px;
+      display: none;
+      padding: 15px;
+      border-radius: 10px;
+      gap: 15px;
+    }
+    ul.menu.active { display: flex; }
+  }
+  
+  .presentation {
+  width: 100%;
+  height: 65vh;           /* Alto ideal en PC */
+  overflow: hidden;       /* Evita que se corte mal */
+}
+
+.presentation video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* Llena todo sin deformarse */
+  object-position: center;
+}
+
+/* En celular se ve más alto automáticamente */
+@media (max-width: 768px) {
+  .presentation {
+    height: 40vh;
+  }
+}
+
+.producto {
+  background: #1a1a1a;
+  border: 1px solid #444;
+  border-radius: 10px;
+  padding: 2px;
+  overflow: hidden;
+  transition: 0.25s ease;
+}
+
+.producto:hover {
+  border-color: #00ffe1;
+  box-shadow: 0 0 10px #00ffe1;
+}
+
+.producto .imagen {
+  width: 100%;
+  height: 160px;
+  background-size: contain;   /* <-- ALEJA LA IMAGEN */
+  background-position: center;
+  background-repeat: no-repeat; /* Para que no se repita */
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.producto h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.producto .precio {
+  color: #00ffe1;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Animación aparición suave */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.producto {
+  animation: fadeUp 0.4s ease forwards;
+  opacity: 0; /* comienza invisible */
+}
+
+.btn-whatsapp {
+  width: 100%;
+  display: block;
+  border: 1px solid #444;
+  border-radius: 8px;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.75);
+  transition: 0.25s ease;
+  background: #111;
+}
+.btn-whatsapp:hover {
+  box-shadow: 0 0 1px #25d365;
+  border-color: #ff7615;
+}
+/* ======================= */
+/*        FOOTER           */
+/* ======================= */
+
+.footer {
+  background: #0a0a0a;
+  border-top: 1px solid #222;
+  padding: 5px 15px 5px;
+  margin-top: 50px;
+  color: #bbb;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5px;
+  text-align: center;
+}
+
+.footer-logo img {
+  width: 100px;
+  transform: scale(1.50);
+  object-fit: cover;
+  object-position: center;
+  filter: drop-shadow(0 0 1px #00ffe1);
+}
+
+.footer-logo p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #bbb;
+}
+
+.footer-links h3,
+.footer-contact h3 {
+  color: #00ffe1;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+/* CONTENEDOR DE LINKS EN FILA */
+.footer-links-list {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+/* LINKS DENTRO DEL FOOTER */
+.footer-links-list a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.footer-links-list a:hover {
+  color: #00ffe1;
+}
+
+.footer-contact p {
+  margin: 6px 0;
+}
+
+.footer-whatsapp {
+  display: inline-block;
+  margin-top: 10px;
+  background: #25d366;
+  padding: 8px 14px;
+  border-radius: 5px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 0 10px #25d36655;
+  transition: 0.2s;
+}
+
+.footer-whatsapp:hover {
+  box-shadow: 0 0 12px #25d366aa;
+}
+
+/* Bottom */
+.footer-bottom {
+  border-top: 1px solid #222;
+  margin-top: 25px;
+  padding-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: #777;
+}
+
+/* ======================= */
+/*   RESPONSIVE FOOTER     */
+/* ======================= */
+
+@media (min-width: 768px) {
+  .footer-content {
+    grid-template-columns: repeat(3, 1fr);
+    text-align: left;
+  }
+} 
+/* ---- Footer solo para pantallas grandes ---- */
+@media (min-width: 900px) {
+  footer .footer-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Secciones - Logo - Contacto */
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Centrar el logo en el medio */
+  .footer-logo {
+    grid-column: 2;            /* Lo coloca en la columna del medio */
+    justify-self: center;
+    margin-top: -90px;
+    margin-bottom: -90px;
+  }
+
+  /* Secciones a la izquierda */
+  .footer-links {
+    grid-column: 1;
+    justify-self: center;
+    text-align: center;
+  }
+  /* HACER LA LISTA VERTICAL */
+  .footer-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+  }
+
+  /* Contacto a la derecha */
+  .footer-contact {
+    grid-column: 3;
+    justify-self: center;
+    text-align: center;
+  }
+
+  /* Si el logo tiene margen arriba/abajo, lo bajamos */
+  .footer-logo img {
+    margin: 15px;
+    margin-top: 100px;
+    transform: scale(1.95);
+  }
+}
+
+/* ======================= */
+/*     SOBRE NOSOTROS      */
+/* ======================= */
+
+.about {
+  padding: 50px 20px;
+  background: #0a0a0a;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+}
+
+.about h2 {
+  text-align: center;
+  color: #00ffe1;
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px #00ffe1;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.about-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #ddd;
+}
+
+.about-text strong {
+  color: #ff6a00;
+}
+
+.about-highlight {
+  margin-top: 15px;
+  color: #00ffe1;
+  font-weight: bold;
+}
+
+.about-image img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 12px #00ffe13a;
+  border: 1px solid #333;
+  object-fit: cover;
+}
+
+/* --- PC Version --- */
+@media (min-width: 900px) {
+  .about-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .about-text {
+    width: 60%;
+  }
+
+  .about-image {
+    width: 35%;
+  }
+}
+
+/* ======================= */
+/*  CARRUSEL FADE SOBRE NOS */
+/* ======================= */
+
+.carousel-fade {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 0 12px #00ffe150;
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.6s ease-in-out;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  filter: brightness(1.05);
+}
+
+/* Viñeta oscura */
+.carousel-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 30%, rgba(0, 0, 0, 0.75));
+  pointer-events: none;
+}
+
+.info-item {
+  text-align: center;
+  color: white;
+  max-width: 260px;
+  margin: auto;
+}
+
+.info-icon {
+  font-size: 50px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  transition: 0.3s ease;
+}
+
+.info-item:hover .info-icon {
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 1));
+}
+.icon-footer {
+  margin-right: 8px;
+  vertical-align: middle;
+  color: white;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+}
+/* ======================= */
+/*   CARRUSEL DE MARCAS    */
+/* ======================= */
+
+.brands-section {
+  padding: 40px 20px;
+  background: #0a0a0a;
+  border-top: 1px solid #222;
+}
+
+.brands-title {
+  text-align: center;
+  color: #ff6a00;
+  font-size: 26px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #ff6a00;
+}
+
+.brands-carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.brands-track {
+  display: flex;
+  gap: 40px;
+  animation: scrollBrands 15s linear infinite;
+}
+
+.brands-track img {
+  height: 20px;
+  filter: brightness(1.5);
+  transition: 0.3s;
+}
+
+.brands-track img:hover {
+  transform: scale(1.1);
+  filter: brightness(2);
+}
+
+/* Animación carrusel marcas */
+@keyframes scrollBrands {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-300%); }
+}
+
+.brands-track img {
+  height: 20px;
+  filter: brightness(1.5);
+  transition: 0.2s;
+  position: relative;
+}
+
+/* Efecto glitch */
+.brands-track img.glitch {
+  animation: glitchEffect 0.25s steps(2) 1;
+}
+
+@keyframes glitchEffect {
+  0% {
+    transform: translate(0,0);
+    filter: hue-rotate(0deg);
+  }
+  20% {
+    transform: translate(-2px, 1px);
+    filter: drop-shadow(2px 0 red) drop-shadow(-2px 0 cyan);
+  }
+  40% {
+    transform: translate(2px, -1px);
+    filter: drop-shadow(-2px 0 red) drop-shadow(2px 0 cyan);
+  }
+  60% {
+    transform: translate(-1px, 2px);
+    filter: drop-shadow(2px 0 cyan) drop-shadow(-2px 0 red);
+  }
+  80% {
+    transform: translate(1px, -2px);
+    filter: drop-shadow(-2px 0 cyan) drop-shadow(2px 0 red);
+  }
+  100% {
+    transform: translate(0,0);
+    filter: brightness(1.3);
+  }
+}
+
+.producto h3 {
+  font-size: 15px;
+  font-weight: bold;
+  min-height: 42px;
+  max-height: 42px;
+  line-height: 1.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Máximo 2 líneas */
+}
+
+.hidden-view {
+  display: none !important;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Botón volver abajo */
+.back-btn {
+  background: none;
+  border: 1px solid #ff6a00;
+  padding: 10px 20px;
+  color: #ff6a00;
+  border-radius: 10px;
+  margin: 20px auto 0;
+  cursor: pointer;
+  transition: 0.3s;
+  display: block;
+}
+
+.back-btn:hover {
+  background: #ff6a00;
+  color: black;
+}
+
+/* PAGINACIÓN */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 25px 0;
+}
+
+.pagination button {
+  background: #111;
+  color: white;
+  border: 1px solid #ff6a00;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pagination button:hover {
+  background: #ff6a00;
+  color: black;
+}
+
+.pagination .active-page {
+  background: #ff6a00;
+  color: black;
+  font-weight: bold;
+}
+.subcat-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.subcat-btn {
+  background: #111;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  cursor: pointer;
+}
+
+.subcat-btn.active {
+  background: #00ffe1;
+  color: #000;
+  border-color: #00ffe1;
+}
+</style>
+<style>
+.subcat-btn {
+  padding: 8px 14px;
+  background: #111;
+  border: 1px solid #ff6a00;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.subcat-btn:hover {
+  background: #ff6a00;
+}
+.btn-vermas {
+  margin-top: 8px;
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid #ddd;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-vermas:hover {
+  background: #ff6a00;
+  color: black;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 25px 0;
+}
+
+.pagination button {
+  min-width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #ff6a00;
+  background: transparent;
+  color: #ff6a00;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover {
+  background: #ff6a00;
+  color: #000;
+}
+
+.pagination button.active-page {
+  background: #ff6a00;
+  color: #000;
+}
+
+.pagination button.arrow {
+  font-size: 18px;
+  padding: 0 12px;
+}
+/* ============================
+   VISTA INDIVIDUAL PROFESIONAL
+   ============================ */
+
+.producto-view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 980px;
+  animation: fadeIn 0.25s ease;
+}
+
+/* Imagen grande */
+.producto-view .img-box {
+  flex: 1 1 380px;
+  background: #0f0f0f;
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.producto-view .img-box img {
+  width: 100%;
+  height: 380px;
+  object-fit: contain;
+}
+
+/* PANEL DERECHO */
+.producto-view .info-box {
+  flex: 1 1 320px;
+  color: white;
+}
+
+.producto-view h2 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.producto-view .precio {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #00eaff;
+  text-shadow: 0 0 10px rgba(0,255,255,0.4);
+}
+
+/* Botón comprar */
+.btn-buy {
+  display: block;
+  width: 100%;
+  background: #ff6a00;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.btn-buy:hover {
+  background: #ff7b1a;
+}
+
+/* Descripción opcional */
+.producto-view .desc {
+  margin-top: 20px;
+  font-size: 15px;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+/* Botón volver */
+.btn-volver {
+  margin-top: 20px;
+  background: #222;
+  border: 1px solid #555;
+  padding: 10px 16px;
+  border-radius: 8px;
+  color: white;
+}
+
+.btn-volver:hover {
+  background: #333;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Vista móvil */
+@media (max-width: 600px) {
+  .producto-view .img-box img {
+    height: 260px;
+  }
+
+  .producto-view h2 {
+    font-size: 18px;
+  }
+
+  .producto-view .precio {
+    font-size: 22px;
+  }
+}
+#btnScrollTop {
+  position: fixed;
+  bottom: 24px;
+  right: 16px;
+
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;        /* no redondo perfecto → más pro */
+
+  background: rgba(30, 30, 30, 0.9);
+  color: #00ffd5;             /* verde/cyan gamer */
+  border: 1px solid rgba(255,255,255,0.1);
+
+  font-size: 18px;
+  cursor: pointer;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  backdrop-filter: blur(6px);
+
+  z-index: 9999;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#btnScrollTop:hover {
+  transform: translateY(-3px);
+  background: rgba(40, 40, 40, 0.95);
+}
+.subcategory-ui{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  margin:20px 0;
+}
+
+/* Botones de subcategoría */
+.subcat-btn{
+  background:rgba(255,255,255,0.04);
+  color:#eaeaea;
+  border:1px solid rgba(0,255,225,0.35); /* cian suave */
+  padding:7px 16px;
+  border-radius:20px;
+  font-size:13px;
+  cursor:pointer;
+  letter-spacing:.4px;
+  transition:all .2s ease;
+}
+
+.subcat-btn:hover{
+  background:rgba(0,255,225,0.08);
+}
+
+/* Activo */
+.subcat-btn.active{
+  background:rgba(0,255,225,0.85);
+  color:#000;
+  border-color:rgba(0,255,225,0.85);
+  box-shadow:0 0 8px rgba(0,255,225,0.45);
+}
+
+/* Select (mobile / plegable) */
+.subcat-select{
+  background:#0e0e0e;
+  color:#eaeaea;
+  border:1px solid rgba(0,255,225,0.35);
+  padding:8px 14px;
+  border-radius:12px;
+  font-size:13px;
+  outline:none;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759531309/TopGaming_logo_superior_ecyw9c.png" alt="Logo Top Gaming">
+  </div>
+  <nav>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul class="menu">
+      <li><a href="#" onclick="goHome()">Inicio</a></li>
+      <li><a href="#" onclick="goCategories()">Categorías</a></li>
+      <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
+      <li><a href="#footer-contact">Contacto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="presentation">
+  <video autoplay muted loop>
+    <source src="https://res.cloudinary.com/dlgwd3dsq/video/upload/v1759777514/Black_And_White_Glitch_Gaming_Channel_Youtube_Intro_20251006_154934_0001_zkzchu.mp4" type="video/mp4">
+    Tu navegador no soporta video.
+  </video>
+</section>
+
+<section class="categories" id="categories">
+  <h2>Categorías</h2>
+
+  <div class="category-grid">
+
+    <!-- CATEGORIA 1 -->
+    <div class="category-card" onclick="loadProducts('Tarjeta Grafica')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759876173/hardware_vkmdf1.jpg"
+           alt="Tarjetas Graficas" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Tarjetas Graficas</p>
+    </div>
+
+    <!-- CATEGORIA 2 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('procesadores')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759876272/procesadores_mthwyl.jpg"
+           alt="procesadores" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Procesadores</p>
+    </div>
+        <!-- CATEGORIA 3 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('teclados')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759876967/3befb271101af2047238ca1441f7093a_zixh0x.jpg"
+           alt="teclados" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Teclados</p>
+    </div>
+        <!-- CATEGORIA 4 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('Memoria Ram')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759876968/af72fe589dae7efc03954e2ce6ea5af8_du733t.jpg"
+           alt="memoria ram" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Memoria Ram</p>
+    </div>
+        <!-- CATEGORIA 5 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('motherboard')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759876968/dac7ab0cba38927274574d1ee7384e82_wg2jrk.jpg"
+           alt="motherboard" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Motherboard</p>
+    </div>
+        <!-- CATEGORIA 6 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('mouse')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759876969/2a1486a8e7c84836e19efad981bf4043_c8yoxo.jpg"
+           alt="mouse" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Mouse</p>
+    </div>
+        <!-- CATEGORIA 7 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('joystick')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759937845/2b7f94bec77968b4d695e9623d5ec699_cxm7bu.jpg"
+           alt="joystick" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Joystick</p>
+    </div>
+        <!-- CATEGORIA 8 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('notebooks')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759937868/c9859714f6d488ec3b7a3489e9294d99_gsnkgh.jpg"
+           alt="notebooks" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Notebooks</p>
+    </div>
+    <!-- CATEGORIA 9 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('monitores')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759937869/c231797fca8a424bd3643bc6016ee9a4_yyirnb.jpg"
+           alt="monitores" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Monitores</p>
+    </div>
+    <!-- CATEGORIA 10 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('audio')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759937869/ae180a4d5beb2b02d92cd05b6e6565f5_w0kmcc.jpg"
+           alt="Auriculares" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Auriculares</p>
+    </div>
+    <!-- CATEGORIA 11 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('Gabinetes')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759937869/058c21bc0382258608f6b96c989bb20e_u620kr.jpg"
+           alt="gabinetes" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Gabinetes</p>
+    </div>
+    <!-- CATEGORIA 12 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('Refrigeracion')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1764201087/e7484d877a3c767405b3929859c24537_ozav84.jpg"
+           alt="refrigeracion" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Refrigeracion</p>
+    </div>
+    <!-- CATEGORIA 13 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('almacenamiento')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1764279996/00d0dd0b1a0359bb77dc6622621301de_cpwg7v.jpg"
+           alt="almacenamiento" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Almacenamiento</p>
+    </div>
+    
+        <!-- CATEGORIA 14 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('computadoras')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1768666642/4489306ccaa1d994eb7ce20d18b352fa_yomrik.jpg"
+           alt="computadoras" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Computadoras</p>
+    </div>
+
+        <!-- CATEGORIA 15 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('smart watch')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1768667993/bd8d8f287d5004397afc6b29a74f1f51_xj24nl.jpg"
+           alt="smart watch" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Smart Watch</p>
+    </div>
+
+        <!-- CATEGORIA 16 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('conectividad')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1768666655/7c6c3e4698685ea6e661a6e46e585d13_wy7jqd.jpg"
+           alt="conectividad" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Conectividad</p>
+    </div>
+
+        <!-- CATEGORIA 17 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('energia')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1768667107/6d0a9e031b180c31addc0f1a98e668b3_w97hvs.jpg"
+           alt="energia" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Energia</p>
+    </div>
+
+        <!-- CATEGORIA 18 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('impresion')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1768667298/4a34edf685cb08c5f17d92093b11d03f_tjy8va.jpg"
+           alt="impresion" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">impresión</p>
+    </div>
+
+        <!-- CATEGORIA 19 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('seguridad')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1768667975/72068838176cc3993741f48158c38f9e_z1xgid.jpg"
+           alt="seguridad" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Seguridad</p>
+    </div>
+
+        <!-- CATEGORIA 20 (Ejemplo) -->
+    <div class="category-card" onclick="loadProducts('herramientas')">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1768668004/0e37e7bba4b33836214512ed03c0a244_qog3br.jpg"
+           alt="herramientas" class="category-img">
+      <div class="category-overlay"></div>
+      <p class="category-text">Herramientas</p>
+    </div>
+
+  </div>
+</section>
+
+<section id="products" class="categories hidden-view">
+
+  <h2 id="products-title"></h2>
+<div id="subcategory-container" class="subcategory-ui" style="display:none;">
+  <button id="btnAll" class="subcat-btn active">TODOS</button>
+
+  <select id="subcategorySelect" class="subcat-select">
+    <!-- opciones dinámicas -->
+  </select>
+</div>
+
+  <div class="category-grid" id="products-container"></div>
+
+  <!-- PAGINACIÓN -->
+  <div id="pagination" class="pagination"></div>
+
+  <!-- BOTÓN VOLVER ABAJO -->
+  <button id="backBtn" onclick="showCategories()" class="back-btn">
+    ← Volver a Categorías
+  </button>
+
+</section>
+<section id="product-view" class="hidden-view">
+  <div id="product-view-container"></div>
+</section>
+
+<section class="brands-section">
+  <h2 class="brands-title">Nuestras Marcas</h2>
+
+  <div class="brands-carousel" id="carousel-brands">
+    <div class="brands-track">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763908808/aorus_tuzktd.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763908808/amd_asnm6l.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763908808/apple_ngucj1.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942124/gigabyte_aieins.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942124/asus_l4belc.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942125/dell_x7z1s0.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942124/corsair_otxc7j.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942136/le8861l44d-lexar-logo-lexar-logo-black-art-of-visuals_1_q1a6ev">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942126/gx-gaming_logo_1_f2k4h9.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942126/hiksemi_logo_1_nukt4r.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942134/hyperx_qqkujp.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942134/intel_trydhx.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942134/kingston_rs9iz8.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942140/lenovo_em8ocy.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942140/logo_kolke_krwqqs.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942141/Logo_LG_Ultragear_vnxl66.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942141/logitech_ail9e1.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942142/Logo-Bosllo-footer-yellow_1_yvyhim.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942147/logo-Gfast_zckzft.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942148/logo-xtechamericas_qtle0a.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942147/logo-patriot_2_k9ykjs.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942147/logo-nisuta_ofpcd2.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942149/msi_vbppjr.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942153/netmak_logo_1_yzxkw9.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942154/nvidia_wrpqin.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942154/palit_zf7hoi.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942154/ozone-logo_1_bhi9bm.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942160/Phillips-Logo-2008-2013_1_vr49sc.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942160/png-transparent-adata-hd-logo_1_h7dim6.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942160/redragon-logo-png_seeklogo-432578_1_feh9zm.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942160/png-transparent-seagate-logo_1_ihlpru.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942165/png-transparent-jbl-logo-thumbnail_2_xneieg.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942166/soul-gaming-logo-1280x640_1_vtk2ca.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942166/thermaltake_pdbgmd.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942166/samsung_js88tb.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942168/trust_gdxpgs.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942173/wacomblanco_dftepd.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942173/Verbatim-logo_1_taprqp.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942174/winco_logo0_tesg2f.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942174/Western-Digital-Logo-2004_1_aa7q9j.png">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942174/xiaomi-brand-logo-phone-symbol-with-name-white-design-chinese-m">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1763942180/xpg_logo_1_f5e8s3.png">
+    </div>
+  </div>
+</section>
+
+<section id="sobre-nosotros" class="about">
+  <h2>Sobre Nosotros</h2>
+
+  <div class="about-content">
+
+    <div class="about-text">
+      <p>
+        En <strong>Top Gaming</strong> somos una tienda dedicada a ofrecer productos de tecnología 
+        y componentes gamer al mejor precio del mercado. Trabajamos con proveedores confiables 
+        para garantizar calidad, buen rendimiento y precios competitivos para todos nuestros clientes.
+      </p>
+
+      <p>
+        Nuestro objetivo es ayudarte a elegir lo mejor para tu setup, ya seas creador de contenido, 
+        jugador competitivo o simplemente un amante de la tecnología.
+      </p>
+    </div>
+<div class="info-item">
+  <div class="info-icon">
+  <svg width="52" height="52" viewBox="0 0 640 512" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M112 0C85.5 0 64 21.5 64 48v48H16c-8.8 0-16 7.2-16 16s7.2 16 16 16h256c8.8 0 16 7.2 16 16s-7.2 16-16 16H48c-8.8 0-16 7.2-16 16s7.2 16 16 16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H16c-8.8 0-16 7.2-16 16s7.2 16 16 16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H64v128c0 53 43 96 96 96s96-43 96-96h128c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48zm432 237.3V256H416v-96h50.7zM160 368a48 48 0 1 1 0 96a48 48 0 1 1 0-96m272 48a48 48 0 1 1 96 0a48 48 0 1 1-96 0"/>
+  </svg>
+</div>
+  <h3>Envíos a todo el país</h3>
+  <p>Realizamos envíos rápidos y seguros a cada rincón de Argentina.</p>
+</div>
+<div class="info-item">
+  <div class="info-icon">
+  <svg width="52" height="52" viewBox="0 0 36 36" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M31.25 7.4a43.79 43.79 0 0 1-6.62-2.35a45 45 0 0 1-6.08-3.21L18 1.5l-.54.35a45 45 0 0 1-6.08 3.21A43.79 43.79 0 0 1 4.75 7.4L4 7.59v8.34c0 13.39 13.53 18.4 13.66 18.45l.34.12l.34-.12c.14 0 13.66-5.05 13.66-18.45V7.59ZM30 15.93c0 11-10 15.61-12 16.43c-2-.82-12-5.44-12-16.43V9.14a47.54 47.54 0 0 0 6.18-2.25a48.23 48.23 0 0 0 5.82-3a48.23 48.23 0 0 0 5.82 3A47.54 47.54 0 0 0 30 9.14Z"/>
+    <path d="M10.88 16.87a1 1 0 0 0-1.41 1.41l6 6L26.4 13.77a1 1 0 0 0-1.4-1.44l-9.47 9.19Z"/>
+  </svg>
+</div>
+  <h3>Productos Garantizados</h3>
+  <p>Todos nuestros productos son originales y de alta calidad.</p>
+</div>
+
+<div class="info-item">
+  <div class="info-icon">
+    <svg width="52" height="52" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 3.5C17.67 1.17 14.2 0 12 0C5.37 0 0 5.37 0 12C0 14.2 1.17 17.67 3.5 20L2 24L6 22.5C8.05 23.5 10.95 24 12 24C18.63 24 24 18.63 24 12C24 9.8 22.83 6.33 20 3.5ZM12 22C10.95 22 8.4 21.5 6.75 20.65L6.45 20.5L4.25 21.25L5 19.1L4.8 18.8C2.9 16.65 2 14 2 12C2 6.48 6.48 2 12 2C14 2 16.65 2.9 18.8 4.8C20.9 6.85 22 9.5 22 12C22 17.52 17.52 22 12 22ZM17.5 14.5C17.3 14.1 16.15 13.55 15.8 13.4C15.46 13.3 15.2 13.25 14.95 13.6C14.7 13.95 14.05 14.7 13.85 14.95C13.65 15.2 13.45 15.25 13.1 15.1C12.75 14.95 11.75 14.6 10.6 13.55C9.7 12.7 9.05 11.65 8.8 11.3C8.55 10.95 8.7 10.7 8.85 10.55C9 10.4 9.25 10.05 9.4 9.85C9.55 9.65 9.6 9.5 9.7 9.25C9.8 9 9.75 8.75 9.65 8.55C9.55 8.35 8.95 6.95 8.7 6.45C8.5 6 8.25 6.1 8 6C7.75 5.9 7.5 5.9 7.25 5.9C7 5.9 6.55 6 6.2 6.4C5.85 6.8 5 7.65 5 9.25C5 10.85 6.2 12.55 6.4 12.85C6.6 13.15 8.15 15.5 11 17C13.85 18.5 14.1 18.5 14.55 18.45C15 18.4 16.3 17.7 16.6 17.2C16.9 16.7 17.3 15.95 17.45 15.6C17.6 15.25 17.7 14.9 17.5 14.5Z"/>
+    </svg>
+  </div>
+  <h3>Atención personalizada</h3>
+  <p>Respondemos por WhatsApp todas tus consultas.</p>
+</div>
+
+    <div class="about-image">
+
+  <div class="carousel-fade">
+    <div class="carousel-slide active">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1764202011/c43c7483f738c1934665a9b98e94a3fd_fmm91v.jpg" alt="Setup 1">
+      <div class="carousel-overlay"></div>
+    </div>
+
+    <div class="carousel-slide">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1764202012/1ea27b86469ce105a335988735dffd57_xvyqcw.jpg" alt="Setup 2">
+      <div class="carousel-overlay"></div>
+    </div>
+
+    <div class="carousel-slide">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1764218236/07335b6a0515d77c07ab8e4ba6258967_rk415j.png" alt="Setup 3">
+      <div class="carousel-overlay"></div>
+    </div>
+  </div>
+
+</div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div id="footer-contact" class="footer-content">
+    
+    <div class="footer-logo">
+      <img src="https://res.cloudinary.com/dlgwd3dsq/image/upload/v1759531309/TopGaming_logo_superior_ecyw9c.png" alt="Top Gaming">
+      <p>Tu tienda gamer de confianza.</p>
+    </div>
+
+    <div class="footer-links">
+  <h3>Secciones</h3>
+
+  <div class="footer-links-list">
+    <a href="#home">Inicio</a>
+    <a href="#categories">Categorías</a>
+    <a href="#sobre-nosotros">Sobre Nosotros</a>
+    <a href="#footer-contact">Contacto</a>
+  </div>
+</div>
+
+  <div class="footer-contact">
+  <h3>Contacto</h3>
+
+  <p>
+    <svg class="icon-footer" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+    viewBox="0 0 24 24">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.1 5.18 
+               2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 
+               2.81 2 2 0 0 1-.45 2.11L9.1 11.54a16 16 0 0 0 6.36 6.36 
+               l1.9-1.31a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 
+               2 2 0 0 1 1.72 1.08z"/>
+    </svg>
+    +54 9 299 xxx xxxx
+  </p>
+
+  <p>
+<p>
+  <svg class="icon-footer" xmlns="http://www.w3.org/2000/svg" 
+       width="20" height="20" viewBox="0 0 32 32">
+    <path fill="currentColor" d="M28 6H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2m-2.2 2L16 14.78L6.2 8ZM4 24V8.91l11.43 7.91a1 1 0 0 0 1.14 0L28 8.91V24Z"/>
+  </svg>
+  contacto@topgaming.com
+</p>
+
+  <a class="footer-whatsapp" href="https://wa.me/5492990000000" target="_blank">
+    WhatsApp
+  </a>
+</div>
+
+  <div class="footer-bottom">
+    © 2025 Top Gaming - Todos los derechos reservados
+  </div>
+</footer>
+
+<script>
+
+// ===========================
+//   MENÚ
+// ===========================
+function toggleMenu() {
+  const menu = document.querySelector('.menu');
+  const toggle = document.querySelector('.menu-toggle');
+
+  menu.classList.toggle('active');
+  toggle.classList.toggle('active');
+}
+
+// Cerrar menú automáticamente al hacer click
+document.querySelectorAll('.menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('.menu').classList.remove('active');
+    document.querySelector('.menu-toggle').classList.remove('active');
+  });
+});
+
+// ===========================
+//   URL DEL JSON
+// ===========================
+const PRODUCT_URL = "https://res.cloudinary.com/dlgwd3dsq/raw/upload/v1767811227/productos_principal_1_gsdorz.json";
+
+
+// ===========================
+//   MANEJO DE VISTAS
+// ===========================
+function showCategories() {
+  document.querySelector("#categories").classList.remove("hidden-view");
+  document.querySelector("#products").classList.add("hidden-view");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function showProducts() {
+  document.querySelector("#categories").classList.add("hidden-view");
+  document.querySelector("#products").classList.remove("hidden-view");
+}
+
+
+// ===========================
+//   PAGINACIÓN - VARIABLES
+// ===========================
+let productosFiltrados = [];
+let paginaActual = 1;
+const productosPorPagina = 12;
+
+
+// ===========================
+//   CARGAR PRODUCTOS
+// ===========================
+function loadProducts(category) {
+  showProducts(); 
+  document.getElementById('products-title').innerText = `Productos de ${category}`;
+
+  const container = document.getElementById('products-container');
+  container.innerHTML = '<p style="text-align:center;">Cargando productos...</p>';
+
+  fetch(PRODUCT_URL)
+    .then(res => res.json())
+    .then(productos => {
+
+      // 🔹 Filtrar productos por categoría y solo los que están en stock
+      productosFiltrados = productos.filter(p => 
+        p.categoria?.toLowerCase() === category.toLowerCase() && p.en_stock
+      );
+
+      // 🔹 Reiniciar la paginación
+      paginaActual = 1;
+
+      // 🔹 Mostrar mensaje si no hay productos
+      if (productosFiltrados.length === 0) {
+        container.innerHTML = `<p style="text-align:center;">No hay productos disponibles en ${category}</p>`;
+        return;
+      }
+
+      // 🔹 Render de la primera página
+      renderPagina(paginaActual);
+    })
+    .catch(err => {
+      console.error(err);
+      container.innerHTML = "<p>Error al cargar productos.</p>";
+    });
+}
+productosOriginales = productos;
+
+productosFiltrados = productos.filter(p => {
+  const c = p.categoria || "";
+  return c === category || c.startsWith(category + "/");
+});
+
+const subcats = getSubcategorias(productosFiltrados, category);
+renderSubcategorias(subcats, category);
+
+paginaActual = 1;
+renderPagina(1);
+
+
+
+// ===========================
+//   RENDERIZAR UNA PÁGINA
+// ===========================
+function renderPagina(numPagina) {
+  const container = document.getElementById("products-container");
+  container.innerHTML = "";
+
+  const inicio = (numPagina - 1) * productosPorPagina;
+  const fin = inicio + productosPorPagina;
+
+  const paginaProductos = productosFiltrados.slice(inicio, fin);
+
+  paginaProductos.forEach((p, i) => {
+    const img = p.imagen || "https://via.placeholder.com/300x200?text=Sin+Imagen";
+    const nombre = p.nombre;
+    const precio = p.precio_final;
+
+    const card = document.createElement('div');
+    card.className = 'producto';
+    card.style.animationDelay = `${i * 0.05}s`;
+
+    const indexReal = productosOriginales.indexOf(p);
+
+card.innerHTML = `
+  <div class="imagen" style="background-image:url('${img}')"></div>
+  <h3>${nombre}</h3>
+  <p class="precio">$ ${precio.toLocaleString("es-AR")}</p>
+
+  <button class="btn-vermas" onclick="verProducto(${indexReal})">
+    Ver más
+  </button>
+`;
+
+    container.appendChild(card);
+  });
+
+  renderPaginacion();
+
+  container.scrollIntoView({ behavior: 'smooth' });
+}
+
+
+
+// ===========================
+//   PAGINACIÓN VISUAL
+// ===========================
+function renderPaginacion() {
+  const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+  const pag = document.getElementById("pagination");
+  pag.innerHTML = "";
+
+  const maxVisible = 5; // cuántas páginas mostrar
+  let inicio = Math.max(1, paginaActual - 2);
+  let fin = Math.min(totalPaginas, inicio + maxVisible - 1);
+
+  // Ajuste si estamos al final
+  if (fin - inicio < maxVisible - 1) {
+    inicio = Math.max(1, fin - maxVisible + 1);
+  }
+
+  // ◀ Flecha anterior
+  const prev = document.createElement("button");
+  prev.className = "arrow";
+  prev.innerHTML = "&#10094;";
+  prev.disabled = paginaActual === 1;
+  prev.onclick = () => cambiarPagina(paginaActual - 1);
+  pag.appendChild(prev);
+
+  // Primera página + ...
+  if (inicio > 1) {
+    pag.appendChild(crearBotonPagina(1));
+    if (inicio > 2) {
+      pag.appendChild(crearDots());
+    }
+  }
+
+  // Páginas visibles
+  for (let i = inicio; i <= fin; i++) {
+    pag.appendChild(crearBotonPagina(i));
+  }
+
+  // Última página + ...
+  if (fin < totalPaginas) {
+    if (fin < totalPaginas - 1) {
+      pag.appendChild(crearDots());
+    }
+    pag.appendChild(crearBotonPagina(totalPaginas));
+  }
+
+  // ▶ Flecha siguiente
+  const next = document.createElement("button");
+  next.className = "arrow";
+  next.innerHTML = "&#10095;";
+  next.disabled = paginaActual === totalPaginas;
+  next.onclick = () => cambiarPagina(paginaActual + 1);
+  pag.appendChild(next);
+}
+
+// helpers
+function crearBotonPagina(num) {
+  const btn = document.createElement("button");
+  btn.innerText = num;
+
+  if (num === paginaActual) {
+    btn.classList.add("active-page");
+  }
+
+  btn.onclick = () => cambiarPagina(num);
+  return btn;
+}
+
+function crearDots() {
+  const span = document.createElement("span");
+  span.innerText = "...";
+  span.style.color = "#ff6a00";
+  span.style.padding = "0 6px";
+  return span;
+}
+
+
+// ===========================
+//   CAMBIAR PÁGINA
+// ===========================
+function cambiarPagina(num) {
+  paginaActual = num;
+  renderPagina(paginaActual);
+}
+
+</script>
+<script>
+  let currentFade = 0;
+  const slidesFade = document.querySelectorAll(".carousel-slide");
+
+  function nextFade() {
+    slidesFade[currentFade].classList.remove("active");
+    currentFade = (currentFade + 1) % slidesFade.length;
+    slidesFade[currentFade].classList.add("active");
+  }
+
+  setInterval(nextFade, 4000); // Cambia cada 4s
+</script>
+<script>
+
+// ==== NUEVO: detectar subcategorías ====
+
+function getSubcategorias(listaProductos, categoriaPrincipal) {
+  const subcats = new Set();
+
+  listaProductos.forEach(p => {
+    if (!p.categoria) return;
+
+    const partes = p.categoria.split("/"); 
+    if (partes[0] === categoriaPrincipal && partes.length > 1) {
+      subcats.add(partes[1]); 
+    }
+  });
+
+  return Array.from(subcats);
+}
+
+
+// ==== NUEVO: renderizar subcategorías ====
+
+function renderSubcategorias(subcats, categoriaPrincipal) {
+  const cont = document.getElementById("subcategory-container");
+  cont.innerHTML = ""; 
+
+  if (subcats.length === 0) {
+    cont.style.display = "none";
+    return;
+  }
+
+  cont.style.display = "flex";
+
+  subcats.forEach(sc => {
+    const btn = document.createElement("button");
+    btn.className = "subcat-btn";
+    btn.innerText = sc.toUpperCase();
+
+    btn.onclick = () => filtrarPorSubcategoria(categoriaPrincipal, sc);
+
+    cont.appendChild(btn);
+  });
+}
+
+
+// ==== NUEVO: Filtrar productos por subcategoría ====
+
+function filtrarPorSubcategoria(categoriaPrincipal, subcat) {
+  productosFiltrados = productosOriginales.filter(p => {
+    return p.categoria === `${categoriaPrincipal}/${subcat}`;
+  });
+
+  paginaActual = 1;
+  renderPagina(paginaActual);
+}
+
+
+// ===========================
+//   MODIFICAR loadProducts
+// ===========================
+
+let productosOriginales = [];
+
+function loadProducts(category) {
+  showProducts(); 
+  document.getElementById('products-title').innerText = `Productos de ${category}`;
+
+  const container = document.getElementById('products-container');
+  container.innerHTML = '<p style="text-align:center;">Cargando productos...</p>';
+
+  fetch(PRODUCT_URL)
+    .then(res => res.json())
+    .then(productos => {
+
+      // Guardamos todos los productos
+      productosOriginales = productos;
+
+      // Filtrar por categoría principal
+      productosFiltrados = productos.filter(p => {
+        const c = p.categoria || "";
+        return c === category || c.startsWith(category + "/");
+      });
+
+      // Detectar subcategorías
+      const subcats = getSubcategorias(productosFiltrados, category);
+
+      // Renderizar botones
+      renderSubcategorias(subcats, category);
+
+      paginaActual = 1;
+      renderPagina(1);
+    })
+    .catch(err => {
+      console.error(err);
+      container.innerHTML = "<p>Error al cargar productos.</p>";
+    });
+}
+// ===========================
+//   VISTA INDIVIDUAL
+// ===========================
+
+function verProducto(id) {
+  const p = productosOriginales[id];
+  if (!p) return;
+
+  showProductView(); // <--- MOSTRAR LA VISTA INDIVIDUAL
+
+  const cont = document.getElementById("product-view-container");
+
+  cont.innerHTML = `
+    <div class="producto-view">
+
+      <!-- IMAGEN -->
+      <div class="img-box">
+        <img src="${p.imagen && p.imagen.length > 5 ? p.imagen : 'https://via.placeholder.com/400x300?text=Sin+Imagen'}">
+      </div>
+
+      <!-- PANEL INFO -->
+      <div class="info-box">
+        <h2>${p.nombre}</h2>
+        <p class="precio">$ ${p.precio_final.toLocaleString("es-AR")}</p>
+
+        <a class="btn-buy"
+           href="https://wa.me/5492996559907?text=Hola!%20Me%20interesa%20${encodeURIComponent(p.nombre)}">
+           Consultar por WhatsApp
+        </a>
+
+        <button class="btn-volver" onclick="hideProductView()">
+          ← Volver
+        </button>
+
+        <p class="desc">
+          ${p.descripcion ? p.descripcion : "Producto nuevo con garantía oficial."}
+        </p>
+      </div>
+
+    </div>
+  `;
+
+  cont.scrollIntoView({ behavior: "smooth" });
+}
+function showProductView() {
+  document.querySelector("#categories").classList.add("hidden-view");
+  document.querySelector("#products").classList.add("hidden-view");
+  document.querySelector("#product-view").classList.remove("hidden-view");
+}
+
+function hideProductView() {
+  document.querySelector("#product-view").classList.add("hidden-view");
+  document.querySelector("#products").classList.remove("hidden-view");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+<button id="btnScrollTop" aria-label="Volver arriba">
+  ↑
+</button>
+<script>
+  const btn = document.getElementById("btnScrollTop");
+
+  window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    btn.style.display = "flex";
+    btn.style.opacity = "1";
+  } else {
+    btn.style.opacity = "0";
+    setTimeout(() => btn.style.display = "none", 200);
+  }
+});
+
+  btn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  });
+  
+  function goHome() {
+  // Mostrar vista principal
+  document.querySelector("#categories").classList.remove("hidden-view");
+  document.querySelector("#products").classList.add("hidden-view");
+
+  // Opcional: ocultar vista individual si existe
+  const detail = document.getElementById("product-detail");
+  if (detail) detail.classList.add("hidden-view");
+
+  // Scroll arriba
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function goCategories() {
+  // Mostrar categorías
+  document.querySelector("#categories").classList.remove("hidden-view");
+
+  // Ocultar productos
+  document.querySelector("#products").classList.add("hidden-view");
+
+  // Ocultar vista individual si existe
+  const detail = document.getElementById("product-detail");
+  if (detail) detail.classList.add("hidden-view");
+
+  // Scroll a la sección categorías
+  document.getElementById("categories")
+    .scrollIntoView({ behavior: "smooth" });
+}
+// ===========================
+//   SUBCATEGORÍAS
+// ===========================
+
+let categoriaActual = "";
+
+// Detectar subcategorías
+function getSubcategorias(listaProductos, categoriaPrincipal) {
+  const subcats = new Set();
+
+  listaProductos.forEach(p => {
+    if (!p.categoria) return;
+
+    const partes = p.categoria.split("/");
+    if (partes[0] === categoriaPrincipal && partes.length > 1) {
+      subcats.add(partes[1]);
+    }
+  });
+
+  return Array.from(subcats);
+}
+
+// Render UI (botón + select)
+function renderSubcategorias(subcats, categoriaPrincipal) {
+  const cont = document.getElementById("subcategory-container");
+  const select = document.getElementById("subcategorySelect");
+  const btnAll = document.getElementById("btnAll");
+
+  if (!subcats.length) {
+    cont.style.display = "none";
+    return;
+  }
+
+  categoriaActual = categoriaPrincipal;
+  cont.style.display = "flex";
+
+  // BOTÓN TODOS
+  btnAll.classList.add("active");
+  btnAll.onclick = () => filtrarTodos(categoriaPrincipal);
+
+  // SELECT
+  select.innerHTML = `<option value="">Subcategoría</option>`;
+
+  subcats.forEach(sc => {
+    const opt = document.createElement("option");
+    opt.value = sc;
+    opt.textContent = sc.toUpperCase();
+    select.appendChild(opt);
+  });
+
+  select.onchange = () => {
+    btnAll.classList.remove("active");
+    filtrarPorSubcategoria(categoriaPrincipal, select.value);
+  };
+}
+
+// Filtrar TODOS
+function filtrarTodos(categoriaPrincipal) {
+  productosFiltrados = productosOriginales.filter(p => {
+    const c = p.categoria || "";
+    return c === categoriaPrincipal || c.startsWith(categoriaPrincipal + "/");
+  });
+
+  document.getElementById("btnAll").classList.add("active");
+  document.getElementById("subcategorySelect").value = "";
+
+  paginaActual = 1;
+  renderPagina(1);
+}
+
+// Filtrar por subcategoría
+function filtrarPorSubcategoria(categoriaPrincipal, subcat) {
+  productosFiltrados = productosOriginales.filter(p => {
+    return p.categoria === `${categoriaPrincipal}/${subcat}`;
+  });
+
+  document.getElementById("btnAll").classList.remove("active");
+
+  paginaActual = 1;
+  renderPagina(1);
+}
+</script>
+</body>
+</html>
