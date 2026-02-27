@@ -1571,9 +1571,11 @@ function loadProducts(category) {
   const container = document.getElementById('products-container');
   container.innerHTML = '<p style="text-align:center;">Cargando productos...</p>';
 
-  fetch(PRODUCT_URL)
-    .then(res => res.json())
-    .then(productos => {
+  fetch(PRODUCT_URL, {
+  cache: "no-store"
+})
+  .then(res => res.json())
+  .then(productos => {
 
       // 🔹 Filtrar productos por categoría y solo los que están en stock
       productosFiltrados = productos.filter(p => 
