@@ -1603,9 +1603,9 @@ function loadProducts(category) {
   const container = document.getElementById('products-container');
   container.innerHTML = '<p style="text-align:center;">Cargando productos...</p>';
 
-  fetch(PRODUCT_URL, {
+  fetch(PRODUCT_URL + "?v=" + Date.now(), {
   cache: "no-store"
-})
+  })
   .then(res => res.json())
   .then(productos => {
 
