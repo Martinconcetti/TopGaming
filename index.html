@@ -1624,7 +1624,16 @@ document.querySelectorAll('.menu a').forEach(link => {
 // ===========================
 //   URL DEL JSON
 // ===========================
-const PRODUCT_URL = "https://res.cloudinary.com/dlgwd3dsq/raw/upload/productos_principal_1_gsdorz.json";
+  const PRODUCT_URL = "https://res.cloudinary.com/dlgwd3dsq/raw/upload/productos_principal_1_gsdorz.json";
+
+async function loadProducts() {
+  const res = await fetch(PRODUCT_URL + "?v=" + Date.now(), {
+    cache: "no-store"
+  });
+
+  const data = await res.json();
+  return data;
+  }
   // ===========================
 //   MANEJO DE VISTAS
 // ===========================
