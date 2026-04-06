@@ -1725,36 +1725,7 @@ function renderPagina(numPagina) {
 card.innerHTML = `
   <div class="imagen" style="background-image:url('${img}')"></div>
   <h3>${nombre}</h3>
-  ${(() => {
-  const precioEfectivo = p.precio_final || 0;
-  const precioTarjeta = p.precio_tarjeta || precioEfectivo;
-  const precioCuotas = p.precio_3_cuotas || 0;
-
-  const cuota = precioCuotas ? Math.ceil(precioCuotas / 3) : 0;
-
-  return `
-    <div class="precio-container">
-
-      <!-- PRECIO PRINCIPAL -->
-      <p class="precio-principal">
-        $ ${precioTarjeta.toLocaleString("es-AR")}
-      </p>
-
-      <!-- EFECTIVO -->
-      <p class="precio-efectivo">
-        💵 $ ${precioEfectivo.toLocaleString("es-AR")} en efectivo / transferencia
-      </p>
-
-      <!-- CUOTAS -->
-      ${cuota ? `
-        <p class="precio-cuotas">
-          💳 3 cuotas de $ ${cuota.toLocaleString("es-AR")}
-        </p>
-      ` : ''}
-
-    </div>
-  `;
-})()}
+    <p class="precio">$ ${precio.toLocaleString("es-AR")}</p>
   <button class="btn-vermas" onclick="verProducto(${indexReal})">
     Ver más
   </button>
@@ -1988,7 +1959,36 @@ function verProducto(id) {
       <!-- PANEL INFO -->
       <div class="info-box">
         <h2>${p.nombre}</h2>
-        <p class="precio">$ ${p.precio_final.toLocaleString("es-AR")}</p>
+        ${(() => {
+  const precioEfectivo = p.precio_final || 0;
+  const precioTarjeta = p.precio_tarjeta || precioEfectivo;
+  const precioCuotas = p.precio_3_cuotas || 0;
+
+  const cuota = precioCuotas ? Math.ceil(precioCuotas / 3) : 0;
+
+  return `
+    <div class="precio-container">
+
+      <!-- PRECIO PRINCIPAL -->
+      <p class="precio-principal">
+        $ ${precioTarjeta.toLocaleString("es-AR")}
+      </p>
+
+      <!-- EFECTIVO -->
+      <p class="precio-efectivo">
+        💵 $ ${precioEfectivo.toLocaleString("es-AR")} en efectivo / transferencia
+      </p>
+
+      <!-- CUOTAS -->
+      ${cuota ? `
+        <p class="precio-cuotas">
+          💳 3 cuotas de $ ${cuota.toLocaleString("es-AR")}
+        </p>
+      ` : ''}
+
+    </div>
+  `;
+})()}
 
         <a class="btn-buy"
            href="https://wa.me/5492996559907?text=Hola!%20Me%20interesa%20${encodeURIComponent(p.nombre)}">
