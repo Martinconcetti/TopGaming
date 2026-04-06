@@ -1123,6 +1123,21 @@
   font-size:13px;
   outline:none;
 }
+  .precio-principal {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+}
+
+.precio-efectivo {
+  color: #00ffcc;
+  font-size: 15px;
+}
+
+.precio-cuotas {
+  color: orange;
+  font-size: 15px;
+  }
 </style>
 </head>
 <body>
@@ -1710,8 +1725,36 @@ function renderPagina(numPagina) {
 card.innerHTML = `
   <div class="imagen" style="background-image:url('${img}')"></div>
   <h3>${nombre}</h3>
-  <p class="precio">$ ${precio.toLocaleString("es-AR")}</p>
+  ${(() => {
+  const precioEfectivo = p.precio_final || 0;
+  const precioTarjeta = p.precio_tarjeta || precioEfectivo;
+  const precioCuotas = p.precio_3_cuotas || 0;
 
+  const cuota = precioCuotas ? Math.ceil(precioCuotas / 3) : 0;
+
+  return `
+    <div class="precio-container">
+
+      <!-- PRECIO PRINCIPAL -->
+      <p class="precio-principal">
+        $ ${precioTarjeta.toLocaleString("es-AR")}
+      </p>
+
+      <!-- EFECTIVO -->
+      <p class="precio-efectivo">
+        💵 $ ${precioEfectivo.toLocaleString("es-AR")} en efectivo / transferencia
+      </p>
+
+      <!-- CUOTAS -->
+      ${cuota ? `
+        <p class="precio-cuotas">
+          💳 3 cuotas de $ ${cuota.toLocaleString("es-AR")}
+        </p>
+      ` : ''}
+
+    </div>
+  `;
+})()}
   <button class="btn-vermas" onclick="verProducto(${indexReal})">
     Ver más
   </button>
