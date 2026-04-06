@@ -1714,7 +1714,7 @@ function renderPagina(numPagina) {
   paginaProductos.forEach((p, i) => {
     const img = p.imagen || "https://via.placeholder.com/300x200?text=Sin+Imagen";
     const nombre = p.nombre;
-    const precio = p.precio_final;
+    const precio = p.precio_tarjeta;
 
     const card = document.createElement('div');
     card.className = 'producto';
