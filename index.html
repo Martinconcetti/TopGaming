@@ -1624,15 +1624,11 @@ document.querySelectorAll('.menu a').forEach(link => {
 // ===========================
 //   URL DEL JSON
 // ===========================
-  const PRODUCT_URL = "https://res.cloudinary.com/dlgwd3dsq/raw/upload/v1775500946/productos_principal_1_ljrilp.json";
+const PRODUCT_URL = "https://res.cloudinary.com/dlgwd3dsq/raw/upload/v1775500946/productos_principal_1_ljrilp.json";
 
 async function loadProducts() {
-  const res = await fetch(PRODUCT_URL + "?v=" + Date.now(), {
-    cache: "no-store"
-  });
-
-  const data = await res.json();
-  return data;
+  const res = await fetch(PRODUCT_URL, { cache: "no-store" });
+  return await res.json();
 }
   // ===========================
 //   MANEJO DE VISTAS
