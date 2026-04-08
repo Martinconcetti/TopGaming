@@ -2095,13 +2095,16 @@ function goCategories() {
   // Ocultar productos
   document.querySelector("#products").classList.add("hidden-view");
 
-  // Ocultar vista individual si existe
+  // 🔴 CLAVE: ocultar vista individual del producto
   const detail = document.getElementById("product-detail");
   if (detail) detail.classList.add("hidden-view");
 
-  // Scroll a la sección categorías
-  document.getElementById("categories")
-    .scrollIntoView({ behavior: "smooth" });
+  // (Opcional pero recomendado)
+  const cont = document.getElementById("product-view-container");
+  if (cont) cont.innerHTML = "";
+
+  // Scroll arriba
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 // ===========================
 //   SUBCATEGORÍAS
