@@ -2069,12 +2069,15 @@ function hideProductView() {
   });
   
   function goHome() {
+
+  // 💥 LIMPIAR PRODUCTO GUARDADO
+  localStorage.removeItem("productoActivo");
+
   // Mostrar vista principal
-    localStorage.removeItem("productoActivo");
   document.querySelector("#categories").classList.remove("hidden-view");
   document.querySelector("#products").classList.add("hidden-view");
 
-  // Opcional: ocultar vista individual si existe
+  // Ocultar vista individual
   const detail = document.getElementById("product-detail");
   if (detail) detail.classList.add("hidden-view");
 
