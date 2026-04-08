@@ -2091,7 +2091,7 @@ function hideProductView() {
 
   // limpiar estado
   localStorage.removeItem("productoActivo");
-mostrarBannee()
+mostrarBanner()
   // 💥 limpiar contenido del producto
   const cont = document.getElementById("product-view-container");
   if (cont) cont.innerHTML = "";
@@ -2110,7 +2110,7 @@ mostrarBannee()
 function goCategories() {
   // Mostrar categorías
   document.querySelector("#categories").classList.remove("hidden-view");
-mostrarBannee()
+mostrarBanner()
   // Ocultar productos
   document.querySelector("#products").classList.add("hidden-view");
 
