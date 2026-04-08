@@ -2043,6 +2043,7 @@ function hideProductView() {
   document.querySelector("#product-view").classList.add("hidden-view");
   document.querySelector("#products").classList.remove("hidden-view");
   window.scrollTo({ top: 0, behavior: "smooth" });
+  document.querySelector(".presentation").classList.add("hidden");
 }
 </script>
 <button id="btnScrollTop" aria-label="Volver arriba">
