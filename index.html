@@ -1958,18 +1958,7 @@ setTimeout(() => {
   setTimeout(() => {
   window.scrollTo({ top: 0, behavior: "instant" });
 }, 50);
-  ocultarBanner();
-  function ocultarBanner() {
-  document.querySelectorAll(".presentation").forEach(el => {
-    el.classList.add("hidden");
-  });
-}
 
-function mostrarBanner() {
-  document.querySelectorAll(".presentation").forEach(el => {
-    el.classList.remove("hidden");
-  });
-  }
   const cont = document.getElementById("product-view-container");
 
   cont.innerHTML = `
@@ -2091,7 +2080,6 @@ function hideProductView() {
 
   // limpiar estado
   localStorage.removeItem("productoActivo");
-mostrarBanner()
   // 💥 limpiar contenido del producto
   const cont = document.getElementById("product-view-container");
   if (cont) cont.innerHTML = "";
@@ -2110,7 +2098,6 @@ mostrarBanner()
 function goCategories() {
   // Mostrar categorías
   document.querySelector("#categories").classList.remove("hidden-view");
-mostrarBanner()
   // Ocultar productos
   document.querySelector("#products").classList.add("hidden-view");
 
