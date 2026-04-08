@@ -1642,7 +1642,6 @@ function showCategories() {
 function showProducts() {
   document.querySelector("#categories").classList.add("hidden-view");
   document.querySelector("#products").classList.remove("hidden-view");
-  document.querySelector(".presentation").classList.add("hidden");
 }
 
 
@@ -1951,7 +1950,9 @@ function verProducto(id) {
   if (!p) return;
 
   showProductView(); // <--- MOSTRAR LA VISTA INDIVIDUAL
-
+document.querySelectorAll(".presentation").forEach(el => {
+  el.classList.add("hidden");
+});
   const cont = document.getElementById("product-view-container");
 
   cont.innerHTML = `
