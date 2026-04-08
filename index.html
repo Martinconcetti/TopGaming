@@ -2070,6 +2070,7 @@ function hideProductView() {
   
   function goHome() {
   // Mostrar vista principal
+    localStorage.removeItem("productoActivo");
   document.querySelector("#categories").classList.remove("hidden-view");
   document.querySelector("#products").classList.add("hidden-view");
 
@@ -2082,7 +2083,6 @@ function hideProductView() {
 }
 function goCategories() {
   // Mostrar categorías
-  localStorage.removeItem("productoActivo");
   document.querySelector("#categories").classList.remove("hidden-view");
 
   // Ocultar productos
