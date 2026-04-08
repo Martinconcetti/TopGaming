@@ -1950,14 +1950,7 @@ function verProducto(id) {
   if (!p) return;
 
   showProductView(); // <--- MOSTRAR LA VISTA INDIVIDUAL
-setTimeout(() => {
-  document.querySelectorAll(".presentation").forEach(el => {
-    el.style.display = "none";
-  });
-}, 0);
-  setTimeout(() => {
-  window.scrollTo({ top: 0, behavior: "instant" });
-}, 50);
+
 
   const cont = document.getElementById("product-view-container");
 
