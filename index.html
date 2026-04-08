@@ -1955,6 +1955,9 @@ setTimeout(() => {
     el.style.display = "none";
   });
 }, 0);
+  setTimeout(() => {
+  window.scrollTo({ top: 0, behavior: "instant" });
+}, 50);
   const cont = document.getElementById("product-view-container");
 
   cont.innerHTML = `
