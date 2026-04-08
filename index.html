@@ -2070,18 +2070,22 @@ function hideProductView() {
   
   function goHome() {
 
-  // 💥 LIMPIAR PRODUCTO GUARDADO
+  // limpiar estado
   localStorage.removeItem("productoActivo");
 
-  // Mostrar vista principal
+  // 💥 limpiar contenido del producto
+  const cont = document.getElementById("product-view-container");
+  if (cont) cont.innerHTML = "";
+
+  // mostrar vistas
   document.querySelector("#categories").classList.remove("hidden-view");
   document.querySelector("#products").classList.add("hidden-view");
 
-  // Ocultar vista individual
+  // ocultar detalle
   const detail = document.getElementById("product-detail");
   if (detail) detail.classList.add("hidden-view");
 
-  // Scroll arriba
+  // scroll arriba
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 function goCategories() {
