@@ -1642,6 +1642,7 @@ function showCategories() {
 function showProducts() {
   document.querySelector("#categories").classList.add("hidden-view");
   document.querySelector("#products").classList.remove("hidden-view");
+  document.querySelector(".presentation").classList.add("hidden");
 }
 
 
@@ -2037,7 +2038,6 @@ function showProductView() {
   document.querySelector("#categories").classList.add("hidden-view");
   document.querySelector("#products").classList.add("hidden-view");
   document.querySelector("#product-view").classList.remove("hidden-view");
-  document.querySelector(".presentation").classList.add("hidden");
 }
 
 function hideProductView() {
