@@ -2037,7 +2037,6 @@ function showProductView() {
   document.querySelector("#categories").classList.add("hidden-view");
   document.querySelector("#products").classList.add("hidden-view");
   document.querySelector("#product-view").classList.remove("hidden-view");
-   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function hideProductView() {
@@ -2105,7 +2104,9 @@ function goCategories() {
   if (cont) cont.innerHTML = "";
 
   // Scroll arriba
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  document.getElementById("categories").scrollIntoView({
+  behavior: "smooth"
+});
 }
 // ===========================
 //   SUBCATEGORÍAS
