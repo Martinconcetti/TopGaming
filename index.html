@@ -2284,18 +2284,6 @@ function verProducto(id) {
            style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; color: #fff; padding: 15px; border-radius: 10px; font-weight: 700; font-size: 18px; text-align: center; text-decoration: none; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3); transition: transform 0.2s, background 0.2s;">
           <i class="fab fa-whatsapp" style="font-size: 22px;"></i> Consultar por WhatsApp
         </a>
-
-
-        <!-- PEGAR ESTO JUSTO ARRIBA DEL BOTÓN "INICIAR ORDEN" -->
-<div class="metodo-pago-container" style="display: flex; gap: 10px; margin-bottom: 15px;">
-  <button id="btn-plan-1pago" class="plan-btn active" onclick="seleccionarPlan('1pago')" style="flex: 1; padding: 10px; background: #1a1f29; border: 2px solid #ff5500; color: #fff; cursor: pointer; border-radius: 5px; font-weight: bold;">
-    1 Pago / QR <br><span style="font-size: 11px; color: #ff5500;">$197.188</span>
-  </button>
-  <button id="btn-plan-3cuotas" class="plan-btn" onclick="seleccionarPlan('3cuotas')" style="flex: 1; padding: 10px; background: #121620; border: 2px solid #2a2f3b; color: #888; cursor: pointer; border-radius: 5px; font-weight: bold;">
-    3 Cuotas Fijas <br><span style="font-size: 11px; color: #00ff66;">3x $86.641</span>
-  </button>
-</div>
-
 <button id="btn-pagar-mp" onclick="iniciarPagoMercadoPago('${p.nombre}', ${p.precio_tarjeta}, '${p.imagen}')"
    style="display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background: linear-gradient(180deg, #1f2937 0%, #111827 100%); color: #ffffff; border-radius: 4px; font-weight: 600; font-size: 15px; width: 100%; cursor: pointer; border: 1px solid #374151; font-family: 'Chakra Petch', sans-serif; text-transform: uppercase; letter-spacing: 2px; position: relative; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 4px 10px rgba(0,0,0,0.5); transition: all 0.2s ease;">
   
@@ -2551,76 +2539,6 @@ function iniciarPagoMercadoPago(titulo, precio, imagenUrl) {
     // Este alert nos va a cantar la verdad si algo falla
     alert("Falla de conexión en el dispositivo:\n" + err.message + "\n\nVerificá tener internet o probar abriendo el archivo desde Chrome fuera de Acode.");
     btn.disabled = false;
-  });
-}
-// 1. Poné esta variable global al principio del <script> o arriba de las funciones
-let planSeleccionado = '1pago';
-
-// 2. Agregá esta función para controlar el diseño de los botones al hacer clic
-function seleccionarPlan(plan) {
-  planSeleccionado = plan;
-  
-  const btn1 = document.getElementById('btn-plan-1pago');
-  const btn3 = document.getElementById('btn-plan-3cuotas');
-  
-  if (plan === '1pago') {
-    btn1.style.borderColor = '#ff5500';
-    btn1.style.color = '#fff';
-    btn1.style.background = '#1a1f29';
-    
-    btn3.style.borderColor = '#2a2f3b';
-    btn3.style.color = '#888';
-    btn3.style.background = '#121620';
-  } else {
-    btn3.style.borderColor = '#00ff66';
-    btn3.style.color = '#fff';
-    btn3.style.background = '#1a1f29';
-    
-    btn1.style.borderColor = '#2a2f3b';
-    btn1.style.color = '#888';
-    btn1.style.background = '#121620';
-  }
-}
-
-// 3. Modificá tu función de procesar pago para que use la variable 'planSeleccionado'
-function procesarPagoGamer(titulo, precioEfectivo, imagenUrl) {
-  const btnMP = document.getElementById("btn-pagar-mp");
-  if(btnMP) btnMP.disabled = true;
-
-  // Limpiamos los puntos del precio base ($181945)
-  const efectivoLimpio = Number(precioEfectivo.toString().replace(/\./g, '')); 
-  
-  let precioFinalParaMP = 0;
-  let esCuotas = false;
-
-  // Tu matemática sagrada según qué botón dejó activo el cliente
-  if (planSeleccionado === '1pago') {
-    const precioUnPago = Math.round(efectivoLimpio / (1 - 0.0773));
-    precioFinalParaMP = Math.round(precioUnPago / 100) * 100;
-  } else if (planSeleccionado === '3cuotas') {
-    const precioTresCuotas = Math.round(efectivoLimpio / (1 - 0.30));
-    precioFinalParaMP = Math.round(precioTresCuotas / 100) * 100;
-    esCuotas = true;
-  }
-
-  // Mandamos el precio exacto a tu backend en Vercel
-  fetch("https://topgaming-backend.vercel.app/api", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      titulo: titulo,
-      precio: precioFinalParaMP,
-      imagen: imagenUrl,
-      esCuotas: esCuotas
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.init_point) window.location.href = data.init_point;
-  })
-  .catch(err => {
-    console.error(err);
-    if(btnMP) btnMP.disabled = false;
   });
 }
 
