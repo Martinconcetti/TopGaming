@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <title>Top Gaming</title>
 <style>
   /* RESET */
@@ -68,7 +70,58 @@
     transform: translateY(0);
   }
 }
+/* MENÚ NAVEGACIÓN Y HAMBURGUESA */
+  nav { display: flex; align-items: center; }
+  ul.menu { display: flex; gap: 20px; list-style: none; }
+  ul.menu li a {
+    font-size: 15px;
+    font-weight: 500;
+    color: #ccc;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+  ul.menu li a:hover, ul.menu li a.active {
+    color: #00d9ff;
+    background: rgba(0, 217, 255, 0.08);
+  }
 
+  /* BOTÓN HAMBURGUESA MÓVIL */
+  .menu-toggle {
+    width: 30px;
+    height: 22px;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 1001;
+  }
+  .menu-toggle span {
+    height: 3px;
+    width: 100%;
+    background: #fff;
+    border-radius: 3px;
+    transition: all 0.25s ease-in-out;
+  }
+  .menu-toggle.active span:nth-child(1) { transform: translateY(9px) rotate(45deg); background: #00d9ff; }
+  .menu-toggle.active span:nth-child(2) { opacity: 0; }
+  .menu-toggle.active span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); background: #00d9ff; }
+
+  @media (max-width: 768px) {
+    .menu-toggle { display: flex; }
+    ul.menu {
+      position: fixed;
+      top: 0; right: -100%;
+      width: 75%; height: 100vh;
+      background: rgba(10, 10, 10, 0.98);
+      border-left: 1px solid #1f2937;
+      flex-direction: column;
+      padding: 100px 30px;
+      transition: right 0.4s ease;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    }
+    ul.menu.active { right: 0; }
+  }
 /* Mostrar menú */
 .menu.active {
   display: flex;
@@ -311,21 +364,20 @@
 }
 
   /* RESPONSIVE */
-  @media (max-width: 768px) {
+ @media (max-width: 768px) {
     .menu-toggle { display: flex; }
     ul.menu {
-      position: absolute;
-      top: 65px;
-      right: 30px;
-      background: #111;
+      position: fixed;
+      top: 0; right: -100%;
+      width: 75%; height: 100vh;
+      background: rgba(10, 10, 10, 0.98);
+      border-left: 1px solid #1f2937;
       flex-direction: column;
-      width: 200px;
-      display: none;
-      padding: 15px;
-      border-radius: 10px;
-      gap: 15px;
+      padding: 100px 30px;
+      transition: right 0.4s ease;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
     }
-    ul.menu.active { display: flex; }
+    ul.menu.active { right: 0; }
   }
   
   .presentation {
@@ -1138,6 +1190,152 @@
   color: orange;
   font-size: 15px;
   }
+  .search-box {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 45px;
+  border-radius: 30px;
+  border: 2px solid rgba(0,255,255,0.2);
+  background: #111;
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* ICONO */
+.search-box i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #00ffff;
+  font-size: 16px;
+}
+
+/* FOCUS EFECTO GAMER */
+.search-box input:focus {
+  border-color: #00ffff;
+  box-shadow: 0 0 10px #00ffff55;
+  background: #000;
+}
+
+/* PLACEHOLDER */
+.search-box input::placeholder {
+  color: #888;
+}
+.search-box input:focus {
+  transform: scale(1.02);
+}
+.clear-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+  cursor: pointer;
+}
+/* En PC centrado */
+@media (min-width: 768px) {
+  .search-box {
+    display: block;
+    margin: 20px auto;
+  }
+}
+.precio-efectivo{
+  color:#00ffcc;
+  font-size:14px;
+  text-align:center;
+  margin-top:5px;
+}
+
+.precio-cuotas{
+  color:#ff8c00;
+  font-size:14px;
+  text-align:center;
+  margin-top:4px;
+}
+@media (max-width: 768px) {
+  .product-detail-layout {
+    flex-direction: column !important;
+  }
+  .product-detail-img-box, .product-detail-info-box {
+    width: 100% !important;
+    flex: none !important;
+  }
+}
+.search-results-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:10px 0 20px;
+}
+
+.search-results-bar h2{
+  color:white;
+  font-size:20px;
+  text-transform:uppercase;
+  margin:0;
+}
+
+.btn-back-search{
+  background:transparent;
+  border:1px solid #ff6a00;
+  color:#ff6a00;
+  padding:8px 14px;
+  border-radius:10px;
+  font-size:14px;
+}
+/* Efecto cuando pasás el mouse (Estilo Botón de Steam/Epic) */
+#btn-pagar-mp:hover {
+  background: linear-gradient(180deg, #374151 0%, #1f2937 100%) !important;
+  border-color: #4b5563 !important;
+  color: #fff !important;
+  transform: translateY(-1px);
+}
+
+/* La línea de neón se enciende a full en el hover */
+#btn-pagar-mp:hover .linea-neon {
+  background: #00ffaa !important; /* Cambia a verde gaming al apuntarlo */
+  box-shadow: 0 0 15px #00ffaa !important;
+}
+
+#btn-pagar-mp:hover .ico-status {
+  animation: pulsoGamer 1s infinite alternate;
+}
+
+/* Estado de carga profesional: cambia el neón por un efecto parpadeante */
+#btn-pagar-mp:disabled {
+  background: #0d1117 !important;
+  border-color: #161b22 !important;
+  color: #484f58 !important;
+  cursor: not-allowed;
+  box-shadow: none !important;
+}
+
+#btn-pagar-mp:disabled .linea-neon {
+  background: #ff6a00 !important;
+  box-shadow: 0 0 10px #ff6a00 !important;
+  animation: cargaPreferencia 1.5s infinite ease-in-out;
+}
+
+@keyframes pulsoGamer {
+  from { transform: scale(1); opacity: 0.6; }
+  to { transform: scale(1.3); opacity: 1; box-shadow: 0 0 15px #00ffaa; }
+}
+
+@keyframes cargaPreferencia {
+  0% { left: -100%; width: 30%; }
+  50% { width: 60%; }
+  100% { left: 100%; width: 30%; }
+}
+
 </style>
 </head>
 <body>
@@ -1167,6 +1365,14 @@
     Tu navegador no soporta video.
   </video>
 </section>
+
+<div id="search-container" class="search-box">
+  <i class="fas fa-search"></i>
+  <input type="text" id="searchInput" placeholder="Buscar hardware, periféricos, componentes..."/>
+  <span class="clear-btn" onclick="clearSearch()">
+  <i class="fa-solid fa-xmark"></i>
+</span>
+</div>
 
 <section class="categories" id="categories">
   <h2>Categorías</h2>
@@ -1409,7 +1615,15 @@
     <!-- opciones dinámicas -->
   </select>
 </div>
+<div id="searchHeader" style="display:none;">
+  <div class="search-results-bar">
+    <h2 id="searchResultsTitle">RESULTADOS</h2>
 
+    <button class="btn-back-search" onclick="clearSearch()">
+      ← Volver
+    </button>
+  </div>
+</div>
   <div class="category-grid" id="products-container"></div>
 
   <!-- PAGINACIÓN -->
@@ -1601,6 +1815,46 @@
 </footer>
 
 <script>
+    let desdeBusqueda = false;
+let todosLosProductos = [];
+
+function cargarProductosGlobal() {
+  fetch(PRODUCT_URL)
+    .then(res => res.json())
+    .then(productos => {
+      todosLosProductos = productos;
+      console.log("JSON listo para buscar 🔥");
+    });
+}
+
+document.addEventListener("DOMContentLoaded", cargarProductosGlobal);
+searchInput.addEventListener("input", () => {
+  const texto = searchInput.value.toLowerCase();
+  const header = document.getElementById("searchHeader");
+const titulo = document.getElementById("searchResultsTitle");
+
+
+  if (texto === "") {
+    header.style.display = "none";
+    desdeBusqueda = false;
+    showCategories(false);
+    return;
+  }
+
+  desdeBusqueda = true;
+
+  const resultados = todosLosProductos
+    .filter(p => (p.nombre || "").toLowerCase().includes(texto))
+    .slice(0, 20);
+
+  productosFiltrados = resultados;
+header.style.display = "block";
+titulo.innerText = `RESULTADOS: "${texto.toUpperCase()}"`;
+  showProducts(false);
+
+  paginaActual = 1;
+  renderPagina(1);
+});
 
 // ===========================
 //   MENÚ
@@ -1725,15 +1979,44 @@ function renderPagina(numPagina) {
     card.className = 'producto';
     card.style.animationDelay = `${i * 0.05}s`;
 
-    const indexReal = productosOriginales.indexOf(p);
+    // Si productosOriginales está vacío (porque venimos directo de búsqueda), buscamos en todosLosProductos
+const arrayDeRespaldo = productosOriginales.length > 0 ? productosOriginales : todosLosProductos;
+
+const indexReal = arrayDeRespaldo.findIndex(prod => prod.nombre === p.nombre);
+
+console.log(nombre, indexReal);
+
+
+console.log(nombre, indexReal);
 
 card.innerHTML = `
   <div class="imagen" style="background-image:url('${img}')"></div>
+
   <h3>${nombre}</h3>
-    <p class="precio">$ ${precio.toLocaleString("es-AR")}</p>
-  <button class="btn-vermas" onclick="verProducto(${indexReal})">
-    Ver más
-  </button>
+
+  <p class="precio">
+    $ ${Number(p.precio_final || precio).toLocaleString("es-AR")}
+  </p>
+
+  <p class="precio-efectivo">
+    Efectivo / Transferencia
+  </p>
+
+  ${p.precio_tarjeta ? `
+    <p class="precio-cuotas">
+      Tarjeta: $ ${Number(p.precio_tarjeta).toLocaleString("es-AR")}
+    </p>
+  ` : ""}
+
+${p.precio_3_cuotas ? `
+  <p class="precio-cuotas">
+    3 Cuotas de $ ${Math.ceil(Number(p.precio_3_cuotas) / 3).toLocaleString("es-AR")}
+  </p>
+` : ""}
+
+<button class="btn-vermas" onclick="verProducto(${indexReal})">
+  Ver detalle
+</button>
 `;
 
     container.appendChild(card);
@@ -1944,72 +2227,88 @@ function loadProducts(category) {
 // ===========================
 //   VISTA INDIVIDUAL
 // ===========================
-
 function verProducto(id) {
-  const p = productosOriginales[id];
+  //document.getElementById("search-container").style.display = "none";
+   // Aseguramos que busque en el array global con stock completo si no se entró por categoría
+  const arrayDeRespaldo = productosOriginales.length > 0 ? productosOriginales : todosLosProductos;
+  
+  const p = arrayDeRespaldo[id];
   if (!p) return;
 
-  showProductView(); // <--- MOSTRAR LA VISTA INDIVIDUAL
-
+  showProductView(); // MOSTRAR LA VISTA INDIVIDUAL
 
   const cont = document.getElementById("product-view-container");
 
+  // Inyectamos exactamente la estructura HTML y clases de mi versión visual premium
   cont.innerHTML = `
-    <div class="producto-view">
+    <div class="product-detail-layout" style="display: flex; flex-direction: row; gap: 40px; padding: 20px; background: #0a0a0a; color: #fff; align-items: flex-start; max-width: 1200px; margin: 0 auto; flex-wrap: wrap;">
 
-      <!-- IMAGEN -->
-      <div class="img-box">
-        <img src="${p.imagen && p.imagen.length > 5 ? p.imagen : 'https://via.placeholder.com/400x300?text=Sin+Imagen'}">
+      <div class="product-detail-img-box" style="flex: 1; min-width: 300px; background: #111827; border-radius: 16px; padding: 20px; display: flex; justify-content: center; align-items: center; border: 1px solid #1f2937; box-shadow: 0 10px 30px rgba(0,0,0,0.7);">
+        <img src="${p.imagen && p.imagen.length > 5 ? p.imagen : 'https://via.placeholder.com/400x300?text=Sin+Imagen'}" alt="${p.nombre}" style="max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 8px;">
       </div>
 
-      <!-- PANEL INFO -->
-      <div class="info-box">
-        <h2>${p.nombre}</h2>
+      <div class="product-detail-info-box" style="flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 20px;">
+        <h2 style="font-size: 28px; font-weight: 700; color: #fff; line-height: 1.3; border-bottom: 2px solid #1f2937; padding-bottom: 15px; font-family: 'Chakra Petch', sans-serif;">${p.nombre}</h2>
+        
         ${(() => {
-  const precioEfectivo = p.precio_final || 0;
-  const precioTarjeta = p.precio_tarjeta || precioEfectivo;
-  const precioCuotas = p.precio_3_cuotas || 0;
+          const precioEfectivo = p.precio_final || 0;
+          const precioTarjeta = p.precio_tarjeta || precioEfectivo;
+          const precioCuotas = p.precio_3_cuotas || 0;
+          const cuota = precioCuotas ? Math.ceil(precioCuotas / 3) : 0;
 
-  const cuota = precioCuotas ? Math.ceil(precioCuotas / 3) : 0;
+          return `
+            <div class="detail-price-card" style="background: #111827; border-left: 4px solid #ff6a00; padding: 20px; border-radius: 4px 12px 12px 4px; border-top: 1px solid #1f2937; border-right: 1px solid #1f2937; border-bottom: 1px solid #1f2937;">
+              <div style="font-size: 14px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px;">Precio Lista (Tarjeta)</div>
+              <p class="precio-principal" style="font-size: 36px; font-weight: 800; color: #ff6a00; margin: 0 0 15px 0; font-family: 'Chakra Petch', sans-serif;">
+                $ ${precioTarjeta.toLocaleString("es-AR")}
+              </p>
 
-  return `
-    <div class="precio-container">
+              <p class="precio-efectivo" style="font-size: 16px; color: #00d9ff; margin: 8px 0; display: flex; align-items: center; gap: 8px; font-weight: 500;">
+                <span>💵</span> $ ${precioEfectivo.toLocaleString("es-AR")} en efectivo / transferencia
+              </p>
 
-      <!-- PRECIO PRINCIPAL -->
-      <p class="precio-principal">
-        $ ${precioTarjeta.toLocaleString("es-AR")}
-      </p>
+              ${cuota ? `
+                <p class="precio-cuotas" style="font-size: 16px; color: #22c55e; margin: 8px 0; display: flex; align-items: center; gap: 8px; font-weight: 600;">
+                  <span>💳</span> 3 cuotas fijas de $ ${cuota.toLocaleString("es-AR")}
+                </p>
+              ` : ''}
+            </div>
+          `;
+        })()}
 
-      <!-- EFECTIVO -->
-      <p class="precio-efectivo">
-        💵 $ ${precioEfectivo.toLocaleString("es-AR")} en efectivo / transferencia
-      </p>
+        <a class="btn-buy"
+           href="https://wa.me/542993258947?text=Hola!%20quiero%20comprar%20${encodeURIComponent(p.nombre)}%0A%0A💳%20Precio:%20$${p.precio_tarjeta.toLocaleString('es-AR')}%0A💵%20Precio%20contado:%20$${p.precio_final.toLocaleString('es-AR')}%0A🧾%203%20cuotas:%20$${p.precio_3_cuotas.toLocaleString('es-AR')}%0A%0ATengo%20una%20consulta 👇"
+           target="_blank"
+           rel="noopener noreferrer"
+           onclick="guardarProducto('${p.nombre}')"
+           style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #25d366; color: #fff; padding: 15px; border-radius: 10px; font-weight: 700; font-size: 18px; text-align: center; text-decoration: none; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3); transition: transform 0.2s, background 0.2s;">
+          <i class="fab fa-whatsapp" style="font-size: 22px;"></i> Consultar por WhatsApp
+        </a>
+<button id="btn-pagar-mp" onclick="iniciarPagoMercadoPago('${p.nombre}', ${p.precio_tarjeta}, '${p.imagen}')"
+   style="display: flex; align-items: center; justify-content: space-between; padding: 18px 24px; background: linear-gradient(180deg, #1f2937 0%, #111827 100%); color: #ffffff; border-radius: 4px; font-weight: 600; font-size: 15px; width: 100%; cursor: pointer; border: 1px solid #374151; font-family: 'Chakra Petch', sans-serif; text-transform: uppercase; letter-spacing: 2px; position: relative; box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 4px 10px rgba(0,0,0,0.5); transition: all 0.2s ease;">
+  
+  <div style="display: flex; align-items: center; gap: 12px;">
+    <span class="ico-status" style="display: inline-block; width: 8px; height: 8px; background-color: #00ffaa; border-radius: 50%; box-shadow: 0 0 10px #00ffaa;"></span>
+    <span style="font-weight: 700;">Iniciar Orden</span>
+  </div>
 
-      <!-- CUOTAS -->
-      ${cuota ? `
-        <p class="precio-cuotas">
-          💳 3 cuotas de $ ${cuota.toLocaleString("es-AR")}
-        </p>
-      ` : ''}
+  <div style="font-size: 12px; color: #9ca3af; font-weight: 500; background: #070b12; padding: 4px 10px; border-radius: 3px; border: 1px solid #1f2937;">
+    SECURE CHECKOUT // <span style="color: #00d9ff; font-weight: 700;">MP</span>
+  </div>
 
-    </div>
-  `;
-})()}
+  <div class="linea-neon" style="position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: #00d9ff; box-shadow: 0 0 8px #00d9ff; transition: all 0.3s ease;"></div>
+</button>
 
-       <a class="btn-buy"
-href="https://wa.me/542993258947?text=Hola!%20quiero%20comprar%20${encodeURIComponent(p.nombre)}%0A%0A💳%20Precio:%20$${p.precio_tarjeta.toLocaleString('es-AR')}%0A💵%20Precio%20contado:%20$${p.precio_final.toLocaleString('es-AR')}%0A🧾%203%20cuotas:%20$${p.precio_3_cuotas.toLocaleString('es-AR')}%0A%0ATengo%20una%20consulta 👇"
-target="_blank"
-rel="noopener noreferrer"
-onclick="guardarProducto('${p.nombre}')">
-Consultar por WhatsApp
-</a>
-        <button class="btn-volver" onclick="hideProductView()">
-          ← Volver
+        <button class="btn-volver" onclick="hideProductView()" style="background: transparent; border: 1px solid #1f2937; color: #9ca3af; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 15px; transition: all 0.2s; font-family: inherit;">
+          ← Volver al catálogo
         </button>
 
-        <p class="desc">
-          ${p.descripcion ? p.descripcion : "Producto nuevo con garantía oficial."}
-        </p>
+        <div style="margin-top: 10px;">
+          <h3 style="font-size: 16px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Descripción del Producto</h3>
+          <p class="desc" style="color: #d1d5db; line-height: 1.6; font-size: 15px; background: #111827; padding: 15px; border-radius: 10px; border: 1px solid #1f2937;">
+            ${p.descripcion ? p.descripcion : "Producto nuevo con garantía oficial."}
+          </p>
+        </div>
       </div>
 
     </div>
@@ -2017,19 +2316,18 @@ Consultar por WhatsApp
 
   cont.scrollIntoView({ behavior: "smooth" });
 }
-  function guardarProducto(nombre) {
+
+function guardarProducto(nombre) {
   localStorage.setItem("productoActivo", nombre);
 }
- window.addEventListener("load", () => {
-  const nombre = localStorage.getItem("productoActivo");
 
+window.addEventListener("load", () => {
+  const nombre = localStorage.getItem("productoActivo");
   if (nombre) {
     const producto = productos.find(p => p.nombre === nombre);
-
     if (producto) {
-      showProductView(producto); // tu función actual
+      showProductView(producto);
     }
-
     localStorage.removeItem("productoActivo");
   }
 });
@@ -2041,10 +2339,15 @@ function showProductView() {
 }
 
 function hideProductView() {
+  // Cuando se vuelve, nos aseguramos de mostrar la barra de búsqueda general nuevamente
+  const searchBar = document.getElementById("search-container");
+  if (searchBar) searchBar.style.display = "block";
+
   document.querySelector("#product-view").classList.add("hidden-view");
   document.querySelector("#products").classList.remove("hidden-view");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
 </script>
 <button id="btnScrollTop" aria-label="Volver arriba">
   ↑
@@ -2188,6 +2491,59 @@ function filtrarPorSubcategoria(categoriaPrincipal, subcat) {
   paginaActual = 1;
   renderPagina(1);
 }
+function clearSearch() {
+  const input = document.getElementById("searchInput");
+  input.value = "";
+  input.dispatchEvent(new Event("input"));
+}
+function iniciarPagoMercadoPago(titulo, precio, imagenUrl) {
+  const btn = document.getElementById("btn-pagar-mp");
+  
+  // 🎮 Animación de carga táctica activa
+  btn.disabled = true;
+
+  // Pasamos los datos limpios al servidor
+  const datosProducto = {
+    titulo: titulo,
+    precio: Number(precio),
+    imagen: imagenUrl || "https://via.placeholder.com/150"
+  };
+
+  console.log("Enviando datos tácticos:", datosProducto);
+
+  // 🚀 ATENCIÓN ACÁ: Usamos tu link real verificado
+  fetch("https://topgaming-backend.vercel.app/api", {
+    method: "POST",
+    headers: { 
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(datosProducto)
+  })
+  .then(res => {
+    if (!res.ok) {
+      throw new Error("El servidor respondió con un error de estado: " + res.status);
+    }
+    return res.json();
+  })
+  .then(data => {
+    if (data.init_point) {
+      // 🦅 Despegue directo a Mercado Pago
+      window.location.href = data.init_point;
+    } else {
+      alert("La respuesta del servidor no contiene el punto de inicio de pago.");
+      btn.disabled = false;
+    }
+  })
+  .catch(err => {
+    console.error("Error en la conexión:", err);
+    // Este alert nos va a cantar la verdad si algo falla
+    alert("Falla de conexión en el dispositivo:\n" + err.message + "\n\nVerificá tener internet o probar abriendo el archivo desde Chrome fuera de Acode.");
+    btn.disabled = false;
+  });
+}
+
+
+
 </script>
 </body>
-</html>
+  </html>
